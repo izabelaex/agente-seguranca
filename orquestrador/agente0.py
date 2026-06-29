@@ -26,10 +26,7 @@ from agentes.relatorio.agente4 import gerar_relatorio
 from orquestrador.llm_client import verificar_conexao
 
 
-# ---------------------------------------------------------------------------
-# Coleta de entrada
-# ---------------------------------------------------------------------------
-
+#Entrada
 def coletar_arquivos(caminhos: list[str]) -> list[Arquivo]:
     """Lê arquivos do disco e retorna no formato do contrato."""
     arquivos = []
@@ -57,10 +54,7 @@ def coletar_contexto() -> ContextoProjeto:
     }
 
 
-# ---------------------------------------------------------------------------
-# Exibição do relatório
-# ---------------------------------------------------------------------------
-
+#Exibição de relatório
 ICONE_SEVERIDADE = {
     "critica": "🔴",
     "alta": "🟠",
@@ -101,10 +95,7 @@ def exibir_relatorio(saida_relatorio: dict) -> None:
     print("\n" + "=" * 60)
 
 
-# ---------------------------------------------------------------------------
-# Orquestração principal
-# ---------------------------------------------------------------------------
-
+#Orquestração
 def orquestrar(projeto_id: str, caminhos_arquivos: list[str]) -> dict:
     """
     Executa o pipeline completo de análise de segurança.
@@ -157,10 +148,7 @@ def orquestrar(projeto_id: str, caminhos_arquivos: list[str]) -> dict:
     return saida_relatorio
 
 
-# ---------------------------------------------------------------------------
-# Ponto de entrada via CLI
-# ---------------------------------------------------------------------------
-
+#Entrada via CLI
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Uso: python agente0.py <projeto_id> <arquivo1.py> [arquivo2.py ...]")

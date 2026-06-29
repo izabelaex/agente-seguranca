@@ -21,9 +21,7 @@ Fluxo:
 from typing import TypedDict, Literal, Optional
 
 
-# ---------------------------------------------------------------------------
-# Entrada do sistema (Agente 0 recebe do desenvolvedor)
-# ---------------------------------------------------------------------------
+#Entrada do sistema pelo Agente 0
 
 class Arquivo(TypedDict):
     caminho: str       # Caminho relativo do arquivo, ex.: "src/app.py"
@@ -42,9 +40,7 @@ class EntradaSistema(TypedDict):
     contexto: ContextoProjeto      # Contexto fornecido pelo desenvolvedor
 
 
-# ---------------------------------------------------------------------------
-# Achado do SCA — Agente 1 (Amanda)
-# ---------------------------------------------------------------------------
+#Achado do SCA pelo Agente 1
 
 class AchadoSCA(TypedDict):
     dependencia: str       # Nome da biblioteca, ex.: "requests"
@@ -59,9 +55,8 @@ class SaidaSCA(TypedDict):
     achados_sca: list[AchadoSCA]
 
 
-# ---------------------------------------------------------------------------
-# Achado do SAST — Agente 2 (Fabrício)
-# ---------------------------------------------------------------------------
+
+# Achado do SAST pelo Agente 2 
 
 TipoVulnerabilidade = Literal["sqli", "xss", "segredo_exposto"]
 
@@ -81,9 +76,8 @@ class SaidaSAST(TypedDict):
     achados_sast: list[AchadoSAST]
 
 
-# ---------------------------------------------------------------------------
-# Entrada do Avaliador de Contexto e Severidade — Agente 3 (Juan)
-# ---------------------------------------------------------------------------
+
+# Entrada do Avaliador de Contexto e Severidade pelo Agente 3
 
 class EntradaAvaliador(TypedDict):
     projeto_id: str
@@ -92,9 +86,7 @@ class EntradaAvaliador(TypedDict):
     contexto: ContextoProjeto
 
 
-# ---------------------------------------------------------------------------
-# Achado validado — saída do Agente 3, entrada do Agente 4 (Juan)
-# ---------------------------------------------------------------------------
+# Achado validado pela saída do Agente 3 com entrada do Agente 4 
 
 StatusAchado = Literal["confirmado", "descartado"]
 NivelSeveridade = Literal["critica", "alta", "media", "baixa", "informativo"]
@@ -120,9 +112,7 @@ class SaidaAvaliador(TypedDict):
     achados_validados: list[AchadoValidado]
 
 
-# ---------------------------------------------------------------------------
-# Relatório final — saída do Agente 4 (Juan)
-# ---------------------------------------------------------------------------
+# Relatório final pela saída do Agente 4
 
 class VulnerabilidadeRelatorio(TypedDict):
     tipo: str

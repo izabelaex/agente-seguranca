@@ -23,13 +23,10 @@ import os
 import json
 import requests
 
-# ---------------------------------------------------------------------------
-# Configuração
-# ---------------------------------------------------------------------------
-
+#Config
 BASE_URL = "https://ollama.futurelab.dcc.ufmg.br"
 
-# Modelo padrão: bom equilíbrio entre velocidade e qualidade para análise de segurança
+# Modelo padrão por bom equilíbrio entre velocidade e qualidade para análise de segurança
 MODELO_PADRAO = "llama3.1:8b"
 
 
@@ -47,10 +44,7 @@ def _get_headers() -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
-# Verificação de conexão
-# ---------------------------------------------------------------------------
-
+#Verifica coonexão
 def verificar_conexao() -> None:
     """
     Verifica se o servidor e a API key estão funcionando.
@@ -77,10 +71,7 @@ def verificar_conexao() -> None:
     print(f"  Modelos  : {', '.join(modelos)}\n")
 
 
-# ---------------------------------------------------------------------------
-# Função principal de chamada ao LLM
-# ---------------------------------------------------------------------------
-
+#Chamada principal ao LLM
 def chamar_llm(prompt: str, system: str = "", modelo: str = MODELO_PADRAO) -> str:
     """
     Envia um prompt ao servidor Ollama e retorna a resposta como string.
