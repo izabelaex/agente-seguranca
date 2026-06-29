@@ -1,0 +1,19 @@
+{
+  "projeto_id": "analise-001",
+  "achados_sca": [
+    {
+      "dependencia": "requests",
+      "versao": "2.19.0",
+      "cve": "CVE-2023-32681",
+      "severidade_base": "MEDIUM",
+      "arquivo": "requirements.txt"
+    },
+    {
+      "dependencia": "flask",
+      "versao": "0.12.2",
+      "cve": "CVE-2018-1000656",
+      "severidade_base": "HIGH",
+      "arquivo": "requirements.txt"
+    }
+  ]
+}

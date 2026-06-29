@@ -1,0 +1,19 @@
+# Cache do Python
+__pycache__/
+*.py[cod]
+
+# Variáveis de ambiente — NUNCA commitar a API key
+.env
+*.env
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store

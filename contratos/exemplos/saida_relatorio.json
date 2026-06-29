@@ -1,0 +1,34 @@
+{
+  "relatorio": {
+    "projeto_id": "analise-001",
+    "total_vulnerabilidades": 2,
+    "vulnerabilidades": [
+      {
+        "tipo": "sqli",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "src/app.py",
+          "linha": 6
+        },
+        "trecho_codigo": "cursor.execute(\"SELECT * FROM usuarios WHERE nome = '\" + nome + \"'\")",
+        "explicacao": "A entrada do usuário é concatenada diretamente na query SQL sem nenhuma sanitização, permitindo que um atacante injete comandos SQL arbitrários e acesse ou manipule dados do banco.",
+        "sugestao_correcao": "Use parâmetros preparados (parameterized queries):\n\ncursor.execute('SELECT * FROM usuarios WHERE nome = ?', (nome,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "dependencia_vulneravel",
+        "severidade": "alta",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "requirements.txt",
+          "linha": null
+        },
+        "trecho_codigo": "flask==0.12.2",
+        "explicacao": "A versão 0.12.2 do Flask possui vulnerabilidade de negação de serviço (CVE-2018-1000656) que pode derrubar a aplicação.",
+        "sugestao_correcao": "Atualize para a versão mais recente do Flask:\n\nflask>=3.0.0",
+        "referencia_cwe_cve": "CVE-2018-1000656"
+      }
+    ]
+  }
+}

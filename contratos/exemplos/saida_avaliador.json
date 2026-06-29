@@ -1,0 +1,41 @@
+{
+  "projeto_id": "analise-001",
+  "achados_validados": [
+    {
+      "tipo": "sqli",
+      "localizacao": {
+        "arquivo": "src/app.py",
+        "linha": 6
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "SQL Injection por concatenação de entrada não sanitizada em query.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet e não possui validações de entrada. A query vulnerável acessa dados de usuários diretamente, tornando o risco crítico."
+    },
+    {
+      "tipo": "dependencia_vulneravel",
+      "localizacao": {
+        "arquivo": "requirements.txt",
+        "linha": null
+      },
+      "referencia_cwe_cve": "CVE-2018-1000656",
+      "descricao": "Flask 0.12.2 possui vulnerabilidade de negação de serviço.",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "Aplicação exposta à internet com versão vulnerável do Flask sem mitigação conhecida no código."
+    },
+    {
+      "tipo": "dependencia_vulneravel",
+      "localizacao": {
+        "arquivo": "requirements.txt",
+        "linha": null
+      },
+      "referencia_cwe_cve": "CVE-2023-32681",
+      "descricao": "requests 2.19.0 pode vazar cabeçalhos de autenticação em redirecionamentos.",
+      "status": "descartado",
+      "severidade": "baixa",
+      "justificativa": "A aplicação não realiza requisições HTTP externas autenticadas no código analisado, reduzindo o risco a desprezível."
+    }
+  ]
+}

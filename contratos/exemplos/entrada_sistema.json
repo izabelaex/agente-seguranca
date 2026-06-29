@@ -1,0 +1,18 @@
+{
+  "projeto_id": "analise-001",
+  "arquivos": [
+    {
+      "caminho": "src/app.py",
+      "conteudo": "import sqlite3\n\ndef buscar_usuario(nome):\n    conn = sqlite3.connect('banco.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT * FROM usuarios WHERE nome = '\" + nome + \"'\")\n    return cursor.fetchall()\n"
+    },
+    {
+      "caminho": "requirements.txt",
+      "conteudo": "requests==2.19.0\nflask==0.12.2\n"
+    }
+  ],
+  "contexto": {
+    "exposto_internet": true,
+    "tipo_aplicacao": "API REST",
+    "validacoes_existentes": "Nenhuma validação de entrada implementada até o momento"
+  }
+}

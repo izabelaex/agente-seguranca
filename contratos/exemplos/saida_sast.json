@@ -1,0 +1,14 @@
+{
+  "projeto_id": "analise-001",
+  "achados_sast": [
+    {
+      "tipo": "sqli",
+      "arquivo": "src/app.py",
+      "linha": 6,
+      "trecho": "cursor.execute(\"SELECT * FROM usuarios WHERE nome = '\" + nome + \"'\")",
+      "cwe": "CWE-89",
+      "cve": null,
+      "descricao": "Concatenação direta de entrada do usuário em query SQL sem sanitização, permitindo SQL Injection."
+    }
+  ]
+}
