@@ -27,7 +27,7 @@ import requests
 BASE_URL = "https://ollama.futurelab.dcc.ufmg.br"
 
 # Modelo padrão por bom equilíbrio entre velocidade e qualidade para análise de segurança
-MODELO_PADRAO = "llama3.1:8b"
+MODELO_PADRAO = "deepseek-r1:8b"
 
 
 def _get_headers() -> dict:
