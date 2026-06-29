@@ -14,9 +14,7 @@ from typing import Optional
 from contratos.schemas import EntradaSistema, SaidaSCA, AchadoSCA
 
 
-# ---------------------------------------------------------------------------
-# Extração de dependências
-# ---------------------------------------------------------------------------
+#Extração de dependências
 
 # Regex que captura "pacote==versao" (ignora extras, URLs, comentários)
 _REQUISITO = re.compile(
@@ -54,9 +52,7 @@ def _extrair_dependencias(arquivos: list[dict]) -> list[tuple[str, str, str]]:
     return dependencias
 
 
-# ---------------------------------------------------------------------------
-# Consulta à API OSV.dev
-# ---------------------------------------------------------------------------
+#Consulta à API OSV.DEV
 
 OSV_API_URL = "https://api.osv.dev/v1/query"
 
@@ -128,10 +124,7 @@ def _extrair_severidade(vuln: dict) -> str:
     return "UNKNOWN"
 
 
-# ---------------------------------------------------------------------------
-# Função principal do agente
-# ---------------------------------------------------------------------------
-
+#Função principal 
 def analisar_dependencias(entrada: EntradaSistema) -> SaidaSCA:
     """
     Recebe os arquivos do projeto e retorna achados de dependências vulneráveis.

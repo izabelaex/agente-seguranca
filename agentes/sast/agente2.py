@@ -24,9 +24,7 @@ from contratos.schemas import EntradaSistema, SaidaSAST, AchadoSAST
 from orquestrador.llm_client import chamar_llm
 
 
-# ---------------------------------------------------------------------------
-# Padrões de regex por tipo de vulnerabilidade
-# ---------------------------------------------------------------------------
+#regex por vulnerabilidade
 
 # SQL Injection: concatenação de variáveis em strings de query
 _REGEX_SQLI = re.compile(
@@ -59,9 +57,7 @@ PADROES = [
 ]
 
 
-# ---------------------------------------------------------------------------
-# Varredura por regex
-# ---------------------------------------------------------------------------
+#Varredura por regex
 
 def _varrer_arquivo(caminho: str, conteudo: str) -> list[dict]:
     """
@@ -87,9 +83,7 @@ def _varrer_arquivo(caminho: str, conteudo: str) -> list[dict]:
     return candidatos
 
 
-# ---------------------------------------------------------------------------
-# Confirmação e enriquecimento via LLM
-# ---------------------------------------------------------------------------
+#Confirmação via LLM
 
 _PROMPT_SISTEMA = """Você é um especialista em segurança de código Python.
 Receberá trechos de código suspeitos de conter vulnerabilidades.
@@ -138,9 +132,7 @@ def _confirmar_com_llm(candidato: dict) -> dict | None:
     }
 
 
-# ---------------------------------------------------------------------------
-# Função principal do agente
-# ---------------------------------------------------------------------------
+#Função principal
 
 def analisar_codigo(entrada: EntradaSistema) -> SaidaSAST:
     """

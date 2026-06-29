@@ -28,9 +28,7 @@ from contratos.schemas import (
 from orquestrador.llm_client import chamar_llm
 
 
-# ---------------------------------------------------------------------------
-# Prompt do sistema
-# ---------------------------------------------------------------------------
+#Prompt do sistema
 
 _PROMPT_SISTEMA = """Você é um especialista em segurança de aplicações (AppSec).
 Receberá um achado de vulnerabilidade e o contexto real do sistema analisado.
@@ -53,9 +51,7 @@ Responda APENAS com um JSON válido (sem markdown):
 }"""
 
 
-# ---------------------------------------------------------------------------
-# Formatação do contexto para o LLM
-# ---------------------------------------------------------------------------
+#Formatação do contexto apra o LLM
 
 def _formatar_contexto(contexto: ContextoProjeto) -> str:
     exposto = "Sim" if contexto["exposto_internet"] else "Não"
@@ -88,9 +84,7 @@ def _formatar_achado_sast(achado: AchadoSAST) -> str:
     )
 
 
-# ---------------------------------------------------------------------------
-# Avaliação individual de cada achado via LLM
-# ---------------------------------------------------------------------------
+#Avaliação de cada achado via LLM
 
 def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia: str, localizacao: dict) -> AchadoValidado | None:
     """
@@ -126,9 +120,7 @@ def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia
     }
 
 
-# ---------------------------------------------------------------------------
-# Função principal do agente
-# ---------------------------------------------------------------------------
+#Função principal do Agente
 
 def avaliar_severidade(entrada: EntradaAvaliador) -> SaidaAvaliador:
     """

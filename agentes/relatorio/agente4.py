@@ -22,10 +22,7 @@ from contratos.schemas import SaidaAvaliador, SaidaRelatorio, VulnerabilidadeRel
 from orquestrador.llm_client import chamar_llm
 
 
-# ---------------------------------------------------------------------------
-# Ordenação por severidade
-# ---------------------------------------------------------------------------
-
+#Ordenação por severidade
 _ORDEM_SEVERIDADE = {
     "critica": 1,
     "alta": 2,
@@ -42,9 +39,7 @@ def _ordenar_por_severidade(achados: list[AchadoValidado]) -> list[AchadoValidad
     )
 
 
-# ---------------------------------------------------------------------------
-# Geração de explicação e sugestão via LLM
-# ---------------------------------------------------------------------------
+#Explicação via LLM
 
 _PROMPT_SISTEMA = """Você é um especialista em segurança de código Python escrevendo para desenvolvedores.
 Receberá um achado de vulnerabilidade confirmado e deve gerar:
@@ -88,9 +83,7 @@ def _gerar_explicacao_e_correcao(achado: AchadoValidado) -> tuple[str, str]:
         return achado["descricao"], f"Corrija o padrão identificado. Referência: {achado['referencia_cwe_cve']}"
 
 
-# ---------------------------------------------------------------------------
-# Montagem do relatório
-# ---------------------------------------------------------------------------
+#Montagem do relatório
 
 def _montar_vulnerabilidade(achado: AchadoValidado, prioridade: int) -> VulnerabilidadeRelatorio:
     """Monta uma VulnerabilidadeRelatorio a partir de um AchadoValidado."""
@@ -113,9 +106,7 @@ def _montar_vulnerabilidade(achado: AchadoValidado, prioridade: int) -> Vulnerab
     }
 
 
-# ---------------------------------------------------------------------------
-# Função principal do agente
-# ---------------------------------------------------------------------------
+#Função principal
 
 def gerar_relatorio(entrada: SaidaAvaliador) -> SaidaRelatorio:
     """
