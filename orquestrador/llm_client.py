@@ -1,8 +1,12 @@
 """
 Camada de abstração para chamadas ao LLM.
 
-Usa LangChain (ChatOllama) com o servidor Ollama da disciplina
-e rastreamento automático via LangSmith.
+Implementa OllamaAuth, uma subclasse de BaseChatModel do LangChain,
+que faz chamadas ao servidor Ollama com autenticação via header X-API-Key.
+(ChatOllama não suporta headers customizados — por isso a subclasse própria.)
+
+Compatível com LCEL (operador |), ChatPromptTemplate, JsonOutputParser
+e rastreamento automático via LangSmith sem precisar de @traceable manual.
 
 Variáveis de ambiente necessárias:
 
@@ -24,9 +28,10 @@ Modelos disponíveis no servidor:
 """
 
 import os
-import json
 import requests
-from langsmith import traceable
+from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.messages import BaseMessage, AIMessage, SystemMessage
+from langchain_core.outputs import ChatResult, ChatGeneration
 
 # ---------------------------------------------------------------------------
 # Configuração
@@ -83,7 +88,6 @@ def verificar_conexao() -> None:
     print(f"  Servidor : {BASE_URL}")
     print(f"  Modelos  : {', '.join(modelos)}")
 
-    # Informa se LangSmith está ativo
     if os.getenv("LANGCHAIN_TRACING_V2") == "true":
         projeto = os.getenv("LANGCHAIN_PROJECT", "default")
         print(f"  LangSmith: ativo (projeto: {projeto})")
@@ -93,49 +97,75 @@ def verificar_conexao() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Função principal de chamada ao LLM
+# Subclasse BaseChatModel com autenticação customizada
 # ---------------------------------------------------------------------------
 
-@traceable(name="chamar_llm")
-def chamar_llm(prompt: str, system: str = "", modelo: str = MODELO_PADRAO) -> str:
+class OllamaAuth(BaseChatModel):
     """
-    Envia um prompt ao servidor Ollama e retorna a resposta como string.
-    Rastreada automaticamente pelo LangSmith via @traceable.
+    Implementação de BaseChatModel que autentica via X-API-Key no Ollama.
 
-    Args:
-        prompt: Mensagem do usuário/agente.
-        system: Instrução de sistema (papel do agente, contexto fixo).
-        modelo: Modelo a usar. Padrão: ticlazau/meta-llama-3.1-8b-instruct:latest
+    Uso com LCEL:
+        from langchain_core.prompts import ChatPromptTemplate
+        from langchain_core.output_parsers import JsonOutputParser
+        from orquestrador.llm_client import llm
 
-    Returns:
-        Resposta do LLM como string.
+        chain = ChatPromptTemplate.from_messages([
+            ("system", "Você é um especialista..."),
+            ("human", "{input}"),
+        ]) | llm | JsonOutputParser()
+
+        resultado = chain.invoke({"input": "analise este trecho..."})
     """
-    mensagens = []
-    if system:
-        mensagens.append({"role": "system", "content": system})
-    mensagens.append({"role": "user", "content": prompt})
 
-    payload = {
-        "model": modelo,
-        "messages": mensagens,
-        "stream": False,
-    }
+    model: str = MODELO_PADRAO
+    base_url: str = BASE_URL
 
-    try:
-        r = requests.post(
-            f"{BASE_URL}/api/chat",
-            headers=_get_headers(),
-            json=payload,
-            timeout=120,
-        )
-        r.raise_for_status()
-    except requests.exceptions.Timeout:
-        raise RuntimeError(f"Timeout ao chamar o modelo '{modelo}'.")
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Erro na chamada ao LLM: {e}")
+    @property
+    def _llm_type(self) -> str:
+        return "ollama-custom-auth"
 
-    data = r.json()
-    if "error" in data:
-        raise RuntimeError(f"Ollama retornou erro: {data['error']}")
+    @property
+    def _identifying_params(self) -> dict:
+        return {"model": self.model, "base_url": self.base_url}
 
-    return data["message"]["content"]
+    def _generate(
+        self,
+        messages: list[BaseMessage],
+        stop: list[str] | None = None,
+        run_manager=None,
+        **kwargs,
+    ) -> ChatResult:
+        msgs = []
+        for m in messages:
+            role = (
+                "system" if isinstance(m, SystemMessage) else
+                "assistant" if isinstance(m, AIMessage) else
+                "user"
+            )
+            msgs.append({"role": role, "content": m.content})
+
+        payload = {"model": self.model, "messages": msgs, "stream": False}
+
+        try:
+            r = requests.post(
+                f"{self.base_url}/api/chat",
+                headers=_get_headers(),
+                json=payload,
+                timeout=120,
+            )
+            r.raise_for_status()
+        except requests.exceptions.Timeout:
+            raise RuntimeError(f"Timeout ao chamar o modelo '{self.model}'.")
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"Erro na chamada ao LLM: {e}")
+
+        data = r.json()
+        if "error" in data:
+            raise RuntimeError(f"Ollama retornou erro: {data['error']}")
+
+        content = data["message"]["content"]
+        return ChatResult(generations=[ChatGeneration(message=AIMessage(content=content))])
+
+
+# Instância padrão — importada pelos agentes
+llm = OllamaAuth()

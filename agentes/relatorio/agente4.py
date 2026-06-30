@@ -13,14 +13,15 @@ Usa o LLM para gerar as explicações e sugestões em linguagem natural,
 garantindo que o desenvolvedor entenda o problema e saiba como corrigi-lo.
 """
 
-import json
 import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 from contratos.schemas import SaidaAvaliador, SaidaRelatorio, VulnerabilidadeRelatorio, AchadoValidado
-from orquestrador.llm_client import chamar_llm
+from orquestrador.llm_client import llm
 
 
 #Ordenação por severidade
@@ -48,10 +49,19 @@ Receberá um achado de vulnerabilidade confirmado e deve gerar:
   2. Uma sugestão concreta de correção em Python (trecho de código ou instrução direta).
 
 Responda APENAS com JSON válido (sem markdown):
-{
+{{
   "explicacao": "...",
   "sugestao_correcao": "..."
-}"""
+}}"""
+
+_chain_relatorio = (
+    ChatPromptTemplate.from_messages([
+        ("system", _PROMPT_SISTEMA),
+        ("human", "{input}"),
+    ])
+    | llm
+    | JsonOutputParser()
+)
 
 
 def _gerar_explicacao_e_correcao(achado: AchadoValidado) -> tuple[str, str]:
@@ -77,8 +87,7 @@ def _gerar_explicacao_e_correcao(achado: AchadoValidado) -> tuple[str, str]:
 
     try:
         time.sleep(3)
-        resposta = chamar_llm(prompt, system=_PROMPT_SISTEMA)
-        dados = json.loads(resposta.strip())
+        dados = _chain_relatorio.invoke({"input": prompt})
         return dados.get("explicacao", achado["descricao"]), dados.get("sugestao_correcao", "Consulte a documentação do CWE referenciado.")
     except Exception as e:
         print(f"  [Relatório] Aviso: LLM indisponível para gerar explicação — {e}")

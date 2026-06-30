@@ -12,12 +12,13 @@ Usa o LLM para raciocinar sobre cada achado individualmente no contexto
 do sistema, produzindo justificativas legíveis para o desenvolvedor.
 """
 
-import json
 import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 from contratos.schemas import (
     EntradaAvaliador,
     SaidaAvaliador,
@@ -26,7 +27,7 @@ from contratos.schemas import (
     AchadoSAST,
     ContextoProjeto,
 )
-from orquestrador.llm_client import chamar_llm
+from orquestrador.llm_client import llm
 
 
 #Prompt do sistema
@@ -45,14 +46,23 @@ Critérios de severidade (baseados em CVSS):
   - informativo: boa prática, sem risco imediato
 
 Responda APENAS com um JSON válido (sem markdown):
-{
+{{
   "status": "confirmado" | "descartado",
   "severidade": "critica" | "alta" | "media" | "baixa" | "informativo",
   "justificativa": "explicação objetiva em 1-2 frases considerando o contexto"
-}"""
+}}"""
+
+_chain_severidade = (
+    ChatPromptTemplate.from_messages([
+        ("system", _PROMPT_SISTEMA),
+        ("human", "{input}"),
+    ])
+    | llm
+    | JsonOutputParser()
+)
 
 
-#Formatação do contexto apra o LLM
+#Formatação do contexto para o LLM
 
 def _formatar_contexto(contexto: ContextoProjeto) -> str:
     exposto = "Sim" if contexto["exposto_internet"] else "Não"
@@ -99,8 +109,7 @@ def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia
 
     try:
         time.sleep(3)
-        resposta = chamar_llm(prompt, system=_PROMPT_SISTEMA)
-        dados = json.loads(resposta.strip())
+        dados = _chain_severidade.invoke({"input": prompt})
     except Exception as e:
         print(f"  [Severidade] Aviso: erro ao avaliar achado — {e}. Mantendo como confirmado/alta.")
         dados = {

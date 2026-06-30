@@ -16,12 +16,13 @@ Estratégia em duas camadas:
 import re
 import sys
 import os
-import json
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 from contratos.schemas import EntradaSistema, SaidaSAST, AchadoSAST
-from orquestrador.llm_client import chamar_llm
+from orquestrador.llm_client import llm
 
 
 #regex por vulnerabilidade
@@ -89,14 +90,23 @@ def _varrer_arquivo(caminho: str, conteudo: str) -> list[dict]:
 _PROMPT_SISTEMA = """Você é um especialista em segurança de código Python.
 Receberá trechos de código suspeitos de conter vulnerabilidades.
 Para cada trecho, responda APENAS com um JSON válido (sem markdown) no formato:
-{
+{{
   "confirmado": true | false,
   "cve": "CVE-XXXX-XXXX ou null",
   "descricao": "explicação objetiva em uma frase"
-}
+}}
 Se o trecho contiver uma senha, chave, token ou segredo literal atribuído diretamente a uma variável, SEMPRE confirme como verdadeiro positivo.
 Se o trecho concatenar uma variável diretamente em HTML sem escape (XSS), SEMPRE confirme como verdadeiro positivo.
 Se o trecho NÃO for vulnerável (falso positivo), responda com confirmado: false."""
+
+_chain_confirmacao = (
+    ChatPromptTemplate.from_messages([
+        ("system", _PROMPT_SISTEMA),
+        ("human", "{input}"),
+    ])
+    | llm
+    | JsonOutputParser()
+)
 
 
 def _confirmar_com_llm(candidato: dict) -> dict | None:
@@ -114,8 +124,7 @@ def _confirmar_com_llm(candidato: dict) -> dict | None:
     )
 
     try:
-        resposta = chamar_llm(prompt, system=_PROMPT_SISTEMA)
-        dados = json.loads(resposta.strip())
+        dados = _chain_confirmacao.invoke({"input": prompt})
     except Exception as e:
         # Em caso de falha do LLM, mantém o achado como suspeito
         print(f"  [SAST] Aviso: LLM não disponível para {candidato['arquivo']}:{candidato['linha']} — {e}")
