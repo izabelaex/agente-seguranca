@@ -2,23 +2,36 @@
 Agente 0 — Orquestrador
 Responsável: Izabela
 
-Ponto de entrada do sistema. Responsável por:
-  1. Coletar arquivos Python a analisar
-  2. Coletar contexto do sistema via diálogo com o desenvolvedor
-  3. Delegar análise aos agentes especialistas (SCA, SAST)
-  4. Encaminhar achados ao Avaliador de Severidade
-  5. Solicitar geração do relatório final
-  6. Apresentar o relatório ao desenvolvedor
+Ponto de entrada do sistema. Constrói e executa o pipeline de análise de
+segurança como um grafo LangGraph, onde cada agente especialista é um nó.
+
+Fluxo do grafo:
+                    ┌─► [sca]  ─┐
+  [entrada] ──► [distribuir] ─┤           ├─► [severidade] ──► [relatorio]
+                    └─► [sast] ─┘
+
+  - SCA e SAST rodam em paralelo (independentes entre si).
+  - Severidade aguarda os dois antes de executar (join automático).
+  - Relatório gera a saída final.
+
+O grafo é visível como nós interativos no LangSmith (aba Traces).
 """
 
-import json
 import sys
 import os
 
-# Garante que o projeto raiz está no path para imports funcionarem
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from contratos.schemas import EntradaSistema, Arquivo, ContextoProjeto, EntradaAvaliador
+from langgraph.graph import StateGraph, END
+
+from contratos.schemas import (
+    EstadoPipeline,
+    EntradaSistema,
+    EntradaAvaliador,
+    SaidaAvaliador,
+    Arquivo,
+    ContextoProjeto,
+)
 from agentes.sca.agente1 import analisar_dependencias
 from agentes.sast.agente2 import analisar_codigo
 from agentes.severidade.agente3 import avaliar_severidade
@@ -26,7 +39,10 @@ from agentes.relatorio.agente4 import gerar_relatorio
 from orquestrador.llm_client import verificar_conexao
 
 
-#Entrada
+# ---------------------------------------------------------------------------
+# Coleta de entrada (fora do grafo — acontece antes de invocar o pipeline)
+# ---------------------------------------------------------------------------
+
 def coletar_arquivos(caminhos: list[str]) -> list[Arquivo]:
     """Lê arquivos do disco e retorna no formato do contrato."""
     arquivos = []
@@ -42,11 +58,9 @@ def coletar_arquivos(caminhos: list[str]) -> list[Arquivo]:
 def coletar_contexto() -> ContextoProjeto:
     """Coleta contexto do projeto via diálogo com o desenvolvedor."""
     print("\n--- Contexto do projeto ---")
-
     exposto = input("A aplicação está exposta à internet? (s/n): ").strip().lower()
     tipo = input("Tipo de aplicação (ex.: API REST, web app, script interno): ").strip()
     validacoes = input("Descreva validações de entrada já existentes (ou 'nenhuma'): ").strip()
-
     return {
         "exposto_internet": exposto == "s",
         "tipo_aplicacao": tipo or "não informado",
@@ -54,19 +68,110 @@ def coletar_contexto() -> ContextoProjeto:
     }
 
 
-#Exibição de relatório
+# ---------------------------------------------------------------------------
+# Nós do grafo LangGraph
+# ---------------------------------------------------------------------------
+
+def _no_distribuir(estado: EstadoPipeline) -> dict:
+    """Nó de entrada — distribui o estado para SCA e SAST em paralelo."""
+    arquivos = estado.get("arquivos", [])
+    print(f"\n[Agente 0] {len(arquivos)} arquivo(s) carregado(s). Delegando análise...")
+    return {}
+
+
+def _no_sca(estado: EstadoPipeline) -> dict:
+    """Nó SCA — análise de dependências vulneráveis."""
+    entrada: EntradaSistema = {
+        "projeto_id": estado["projeto_id"],
+        "arquivos": estado["arquivos"],
+        "contexto": estado["contexto"],
+    }
+    saida = analisar_dependencias(entrada)
+    return {"achados_sca": saida["achados_sca"]}
+
+
+def _no_sast(estado: EstadoPipeline) -> dict:
+    """Nó SAST — varredura estática do código."""
+    entrada: EntradaSistema = {
+        "projeto_id": estado["projeto_id"],
+        "arquivos": estado["arquivos"],
+        "contexto": estado["contexto"],
+    }
+    saida = analisar_codigo(entrada)
+    return {"achados_sast": saida["achados_sast"]}
+
+
+def _no_severidade(estado: EstadoPipeline) -> dict:
+    """Nó Severidade — aguarda SCA + SAST e avalia cada achado com contexto."""
+    entrada: EntradaAvaliador = {
+        "projeto_id": estado["projeto_id"],
+        "achados_sca": estado.get("achados_sca", []),
+        "achados_sast": estado.get("achados_sast", []),
+        "contexto": estado["contexto"],
+    }
+    saida = avaliar_severidade(entrada)
+    return {"achados_validados": saida["achados_validados"]}
+
+
+def _no_relatorio(estado: EstadoPipeline) -> dict:
+    """Nó Relatório — gera o relatório final priorizado."""
+    entrada: SaidaAvaliador = {
+        "projeto_id": estado["projeto_id"],
+        "achados_validados": estado.get("achados_validados", []),
+    }
+    saida = gerar_relatorio(entrada)
+    return {"relatorio": saida["relatorio"]}
+
+
+# ---------------------------------------------------------------------------
+# Construção do grafo
+# ---------------------------------------------------------------------------
+
+def _construir_pipeline():
+    builder = StateGraph(EstadoPipeline)
+
+    builder.add_node("distribuir",  _no_distribuir)
+    builder.add_node("sca",         _no_sca)
+    builder.add_node("sast",        _no_sast)
+    builder.add_node("severidade",  _no_severidade)
+    builder.add_node("relatorio",   _no_relatorio)
+
+    # Ponto de entrada → distribuidor
+    builder.set_entry_point("distribuir")
+
+    # Fan-out paralelo: distribuidor → SCA e SAST ao mesmo tempo
+    builder.add_edge("distribuir", "sca")
+    builder.add_edge("distribuir", "sast")
+
+    # Fan-in: severidade aguarda ambos
+    builder.add_edge("sca",        "severidade")
+    builder.add_edge("sast",       "severidade")
+
+    # Sequência final
+    builder.add_edge("severidade", "relatorio")
+    builder.add_edge("relatorio",  END)
+
+    return builder.compile()
+
+
+_pipeline = _construir_pipeline()
+
+
+# ---------------------------------------------------------------------------
+# Exibição do relatório
+# ---------------------------------------------------------------------------
+
 ICONE_SEVERIDADE = {
-    "critica": "🔴",
-    "alta": "🟠",
-    "media": "🟡",
-    "baixa": "🟢",
+    "critica":     "🔴",
+    "alta":        "🟠",
+    "media":       "🟡",
+    "baixa":       "🟢",
     "informativo": "⚪",
 }
 
 
-def exibir_relatorio(saida_relatorio: dict) -> None:
+def exibir_relatorio(relatorio: dict) -> None:
     """Exibe o relatório final de forma legível no terminal."""
-    relatorio = saida_relatorio["relatorio"]
     total = relatorio["total_vulnerabilidades"]
 
     print("\n" + "=" * 60)
@@ -95,22 +200,24 @@ def exibir_relatorio(saida_relatorio: dict) -> None:
     print("\n" + "=" * 60)
 
 
-#Orquestração
+# ---------------------------------------------------------------------------
+# Orquestração principal
+# ---------------------------------------------------------------------------
+
 def orquestrar(projeto_id: str, caminhos_arquivos: list[str]) -> dict:
     """
-    Executa o pipeline completo de análise de segurança.
+    Executa o pipeline de análise via grafo LangGraph.
 
     Args:
         projeto_id: Identificador único da análise.
         caminhos_arquivos: Lista de caminhos dos arquivos Python a analisar.
 
     Returns:
-        Relatório final como dicionário.
+        Estado final do pipeline (inclui relatório).
     """
     verificar_conexao()
     print(f"\n[Agente 0] Iniciando análise do projeto '{projeto_id}'...")
 
-    # 1. Montar entrada
     arquivos = coletar_arquivos(caminhos_arquivos)
     if not arquivos:
         print("[Agente 0] Nenhum arquivo válido encontrado. Encerrando.")
@@ -118,37 +225,24 @@ def orquestrar(projeto_id: str, caminhos_arquivos: list[str]) -> dict:
 
     contexto = coletar_contexto()
 
-    entrada: EntradaSistema = {
+    estado_inicial: EstadoPipeline = {
         "projeto_id": projeto_id,
-        "arquivos": arquivos,
-        "contexto": contexto,
+        "arquivos":   arquivos,
+        "contexto":   contexto,
     }
 
-    print(f"\n[Agente 0] {len(arquivos)} arquivo(s) carregado(s). Delegando análise...")
+    estado_final = _pipeline.invoke(estado_inicial)
 
-    # 2. Delegar aos especialistas (independentes entre si)
-    saida_sca = analisar_dependencias(entrada)
-    saida_sast = analisar_codigo(entrada)
+    if "relatorio" in estado_final:
+        exibir_relatorio(estado_final["relatorio"])
 
-    # 3. Encaminhar ao Avaliador de Severidade
-    entrada_avaliador: EntradaAvaliador = {
-        "projeto_id": projeto_id,
-        "achados_sca": saida_sca["achados_sca"],
-        "achados_sast": saida_sast["achados_sast"],
-        "contexto": contexto,
-    }
-    saida_avaliador = avaliar_severidade(entrada_avaliador)
-
-    # 4. Gerar relatório final
-    saida_relatorio = gerar_relatorio(saida_avaliador)
-
-    # 5. Apresentar ao desenvolvedor
-    exibir_relatorio(saida_relatorio)
-
-    return saida_relatorio
+    return estado_final
 
 
-#Entrada via CLI
+# ---------------------------------------------------------------------------
+# Entrada via CLI
+# ---------------------------------------------------------------------------
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Uso: python agente0.py <projeto_id> <arquivo1.py> [arquivo2.py ...]")
@@ -156,6 +250,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     projeto_id = sys.argv[1]
-    arquivos = sys.argv[2:]
+    arquivos   = sys.argv[2:]
 
-    resultado = orquestrar(projeto_id, arquivos)
+    orquestrar(projeto_id, arquivos)

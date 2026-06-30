@@ -88,6 +88,8 @@ def _gerar_explicacao_e_correcao(achado: AchadoValidado) -> tuple[str, str]:
     try:
         time.sleep(3)
         dados = _chain_relatorio.invoke({"input": prompt})
+        if not isinstance(dados, dict):
+            raise ValueError(f"Resposta inesperada do LLM (não é dict): {type(dados)}")
         return dados.get("explicacao", achado["descricao"]), dados.get("sugestao_correcao", "Consulte a documentação do CWE referenciado.")
     except Exception as e:
         print(f"  [Relatório] Aviso: LLM indisponível para gerar explicação — {e}")

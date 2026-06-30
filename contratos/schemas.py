@@ -18,7 +18,8 @@ Fluxo:
   Relatorio         (Agente 4 — Juan)
 """
 
-from typing import TypedDict, Literal, Optional
+from typing import Literal, Optional, List
+from typing_extensions import TypedDict
 
 
 #Entrada do sistema pelo Agente 0
@@ -132,4 +133,16 @@ class Relatorio(TypedDict):
 
 
 class SaidaRelatorio(TypedDict):
+    relatorio: Relatorio
+
+
+# Estado do pipeline LangGraph (flui entre os nós do grafo)
+
+class EstadoPipeline(TypedDict, total=False):
+    projeto_id: str
+    arquivos: List[Arquivo]
+    contexto: ContextoProjeto
+    achados_sca: List[AchadoSCA]
+    achados_sast: List[AchadoSAST]
+    achados_validados: List[AchadoValidado]
     relatorio: Relatorio

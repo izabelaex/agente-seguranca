@@ -110,6 +110,8 @@ def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia
     try:
         time.sleep(3)
         dados = _chain_severidade.invoke({"input": prompt})
+        if not isinstance(dados, dict):
+            raise ValueError(f"Resposta inesperada do LLM (não é dict): {type(dados)}")
     except Exception as e:
         print(f"  [Severidade] Aviso: erro ao avaliar achado — {e}. Mantendo como confirmado/alta.")
         dados = {

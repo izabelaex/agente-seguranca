@@ -7,5 +7,11 @@ requests>=2.28.0
 # LangChain — BaseChatModel, LCEL, ChatPromptTemplate, JsonOutputParser
 langchain-core>=0.2.0
 
+# LangGraph — orquestração multi-agente como grafo de estados
+langgraph>=0.2.0
+
 # Observabilidade via LangSmith (tracing automático com componentes LangChain)
 langsmith>=0.1.0
+
+# Interface web
+streamlit>=1.35.0

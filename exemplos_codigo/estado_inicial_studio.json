@@ -1,0 +1,14 @@
+{
+  "projeto_id": "demo-studio",
+  "arquivos": [
+    {
+      "caminho": "exemplos_codigo/app_vulneravel.py",
+      "conteudo": "# Arquivo de exemplo com vulnerabilidades intencionais para testar o pipeline.\n# NÃO usar em produção.\n\nimport sqlite3\n\nDB_PASSWORD = \"senha123\"  # segredo exposto (CWE-798)\n\ndef buscar_usuario(nome):\n    conn = sqlite3.connect(\"banco.db\")\n    cursor = conn.cursor()\n    # SQL Injection (CWE-89): entrada concatenada diretamente na query\n    cursor.execute(\"SELECT * FROM usuarios WHERE nome = '\" + nome + \"'\")\n    return cursor.fetchall()\n"
+    }
+  ],
+  "contexto": {
+    "exposto_internet": true,
+    "tipo_aplicacao": "API REST",
+    "validacoes_existentes": "nenhuma"
+  }
+}

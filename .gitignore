@@ -17,3 +17,6 @@ env/
 
 # macOS
 .DS_Store
+
+# LangGraph Studio — dados de runtime (checkpoints, cache)
+.langgraph_api/
