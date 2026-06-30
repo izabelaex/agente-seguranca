@@ -1,5 +1,13 @@
 # Dependências do projeto
 # Instale com: pip install -r requirements.txt
 
-# Chamadas HTTP — Agente 1 (OSV.dev) e cliente LLM (Ollama)
+# Chamadas HTTP (Agente 1 — OSV.dev)
 requests>=2.28.0
+
+# LangChain + integração Ollama
+langchain>=0.2.0
+langchain-community>=0.2.0
+langchain-core>=0.2.0
+
+# Observabilidade via LangSmith
+langsmith>=0.1.0

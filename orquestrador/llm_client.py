@@ -1,32 +1,38 @@
 """
 Camada de abstração para chamadas ao LLM.
 
-Usa o servidor Ollama da disciplina (https://ollama.futurelab.dcc.ufmg.br)
-com autenticação via cabeçalho X-API-Key.
+Usa LangChain (ChatOllama) com o servidor Ollama da disciplina
+e rastreamento automático via LangSmith.
 
-Configuração necessária — defina as variáveis de ambiente antes de rodar:
-    export LLM_API_KEY="sua-chave-individual"
+Variáveis de ambiente necessárias:
 
-Ou crie um arquivo .env na raiz do projeto:
-    LLM_API_KEY=sua-chave-individual
+  Obrigatória:
+    LLM_API_KEY          Chave individual fornecida pelo professor
+
+  LangSmith (opcional, mas recomendado para análise e artigo):
+    LANGCHAIN_TRACING_V2    true
+    LANGCHAIN_API_KEY       chave do LangSmith (https://smith.langchain.com)
+    LANGCHAIN_PROJECT       nome do projeto no LangSmith (ex: agente-seguranca)
 
 Modelos disponíveis no servidor:
-    llama3.2:3b        — rápido, bom para testes
-    llama3.1:8b        — balanceado, recomendado para produção
-    deepseek-r1:8b     — melhor raciocínio (mais lento)
-    deepseek-coder     — otimizado para código
+    ticlazau/meta-llama-3.1-8b-instruct:latest  — padrão (balanceado)
+    llama3.2:3b                                  — mais rápido para testes
+    deepseek-r1:8b                               — melhor raciocínio
+    deepseek-coder:latest                        — otimizado para código
     qwen2.5:7b
-    mixtral:8x7b       — mais capaz, mais lento
+    mixtral:8x7b                                 — mais capaz, mais lento
 """
 
 import os
 import json
 import requests
+from langsmith import traceable
 
-#Config
+# ---------------------------------------------------------------------------
+# Configuração
+# ---------------------------------------------------------------------------
+
 BASE_URL = "https://ollama.futurelab.dcc.ufmg.br"
-
-# Modelo padrão por bom equilíbrio entre velocidade e qualidade para análise de segurança
 MODELO_PADRAO = "ticlazau/meta-llama-3.1-8b-instruct:latest"
 
 
@@ -44,7 +50,10 @@ def _get_headers() -> dict:
     }
 
 
-#Verifica coonexão
+# ---------------------------------------------------------------------------
+# Verificação de conexão
+# ---------------------------------------------------------------------------
+
 def verificar_conexao() -> None:
     """
     Verifica se o servidor e a API key estão funcionando.
@@ -52,7 +61,11 @@ def verificar_conexao() -> None:
     """
     print("Verificando conexão com o servidor Ollama...", end=" ", flush=True)
     try:
-        r = requests.get(f"{BASE_URL}/api/tags", headers=_get_headers(), timeout=10)
+        r = requests.get(
+            f"{BASE_URL}/api/tags",
+            headers=_get_headers(),
+            timeout=10,
+        )
     except requests.exceptions.ConnectionError:
         raise SystemExit(f"\n[ERRO] Não foi possível conectar ao servidor: {BASE_URL}")
     except requests.exceptions.Timeout:
@@ -68,25 +81,34 @@ def verificar_conexao() -> None:
     modelos = [m["name"] for m in r.json().get("models", [])]
     print("✓")
     print(f"  Servidor : {BASE_URL}")
-    print(f"  Modelos  : {', '.join(modelos)}\n")
+    print(f"  Modelos  : {', '.join(modelos)}")
+
+    # Informa se LangSmith está ativo
+    if os.getenv("LANGCHAIN_TRACING_V2") == "true":
+        projeto = os.getenv("LANGCHAIN_PROJECT", "default")
+        print(f"  LangSmith: ativo (projeto: {projeto})")
+    else:
+        print("  LangSmith: inativo (defina LANGCHAIN_TRACING_V2=true para ativar)")
+    print()
 
 
-#Chamada principal ao LLM
+# ---------------------------------------------------------------------------
+# Função principal de chamada ao LLM
+# ---------------------------------------------------------------------------
+
+@traceable(name="chamar_llm")
 def chamar_llm(prompt: str, system: str = "", modelo: str = MODELO_PADRAO) -> str:
     """
     Envia um prompt ao servidor Ollama e retorna a resposta como string.
+    Rastreada automaticamente pelo LangSmith via @traceable.
 
     Args:
         prompt: Mensagem do usuário/agente.
         system: Instrução de sistema (papel do agente, contexto fixo).
-        modelo: Modelo a usar. Padrão: llama3.1:8b.
+        modelo: Modelo a usar. Padrão: ticlazau/meta-llama-3.1-8b-instruct:latest
 
     Returns:
         Resposta do LLM como string.
-
-    Raises:
-        EnvironmentError: Se LLM_API_KEY não estiver definida.
-        RuntimeError: Se a chamada à API falhar.
     """
     mensagens = []
     if system:
@@ -108,7 +130,7 @@ def chamar_llm(prompt: str, system: str = "", modelo: str = MODELO_PADRAO) -> st
         )
         r.raise_for_status()
     except requests.exceptions.Timeout:
-        raise RuntimeError(f"Timeout ao chamar o modelo '{modelo}'. Tente um modelo mais rápido (ex.: llama3.2:3b).")
+        raise RuntimeError(f"Timeout ao chamar o modelo '{modelo}'.")
     except requests.exceptions.RequestException as e:
         raise RuntimeError(f"Erro na chamada ao LLM: {e}")
 
