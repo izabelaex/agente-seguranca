@@ -110,7 +110,7 @@ Exemplo de título: `[Agente 2] Falso positivo em variável 'token' sem valor li
 Se o modelo padrão (`llama3.1:8b`) estiver lento ou com respostas ruins, edite a linha em `orquestrador/llm_client.py`:
 
 ```python
-MODELO_PADRAO = "llama3.2:3b"   # mais rápido
+MODELO_PADRAO = "ticlazau/meta-llama-3.1-8b-instruct:latest"   # mais rápido
 # ou
 MODELO_PADRAO = "deepseek-r1:8b"  # melhor raciocínio
 ```

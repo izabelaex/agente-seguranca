@@ -27,7 +27,7 @@ import requests
 BASE_URL = "https://ollama.futurelab.dcc.ufmg.br"
 
 # Modelo padrão por bom equilíbrio entre velocidade e qualidade para análise de segurança
-MODELO_PADRAO = "deepseek-r1:8b"
+MODELO_PADRAO = "ticlazau/meta-llama-3.1-8b-instruct:latest"
 
 
 def _get_headers() -> dict:
@@ -104,7 +104,7 @@ def chamar_llm(prompt: str, system: str = "", modelo: str = MODELO_PADRAO) -> st
             f"{BASE_URL}/api/chat",
             headers=_get_headers(),
             json=payload,
-            timeout=60,
+            timeout=120,
         )
         r.raise_for_status()
     except requests.exceptions.Timeout:

@@ -162,9 +162,18 @@ def analisar_dependencias(entrada: EntradaSistema) -> SaidaSCA:
                 "arquivo": arquivo,
             })
 
-    print(f"[Agente 1 - SCA] {len(achados)} vulnerabilidade(s) encontrada(s).")
+    # Deduplicar: OSV pode retornar o mesmo CVE em registros diferentes (ex.: GHSA + OSV)
+    vistos: set[tuple[str, str, str]] = set()
+    achados_unicos: list[AchadoSCA] = []
+    for a in achados:
+        chave = (a["dependencia"], a["versao"], a["cve"])
+        if chave not in vistos:
+            vistos.add(chave)
+            achados_unicos.append(a)
+
+    print(f"[Agente 1 - SCA] {len(achados_unicos)} vulnerabilidade(s) única(s) encontrada(s) (antes da dedup: {len(achados)}).")
 
     return {
         "projeto_id": entrada["projeto_id"],
-        "achados_sca": achados,
+        "achados_sca": achados_unicos,
     }

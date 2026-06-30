@@ -1,3 +1,4 @@
+import time
 """
 Agente 3 — Avaliador de Contexto e Severidade
 Responsável: Izabela
@@ -97,6 +98,7 @@ def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia
     prompt = f"{descricao_achado}\n\n{contexto_str}\n\nEste achado é real e relevante neste contexto?"
 
     try:
+        time.sleep(3)
         resposta = chamar_llm(prompt, system=_PROMPT_SISTEMA)
         dados = json.loads(resposta.strip())
     except Exception as e:

@@ -1,3 +1,4 @@
+import time
 """
 Agente 4 — Gerador de Relatórios e Correções
 Responsável: Izabela
@@ -75,6 +76,7 @@ def _gerar_explicacao_e_correcao(achado: AchadoValidado) -> tuple[str, str]:
     )
 
     try:
+        time.sleep(3)
         resposta = chamar_llm(prompt, system=_PROMPT_SISTEMA)
         dados = json.loads(resposta.strip())
         return dados.get("explicacao", achado["descricao"]), dados.get("sugestao_correcao", "Consulte a documentação do CWE referenciado.")

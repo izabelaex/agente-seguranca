@@ -37,16 +37,17 @@ _REGEX_SQLI = re.compile(
 
 # XSS: interpolação de variável em HTML sem escape
 _REGEX_XSS = re.compile(
-    r'(render_template_string|Markup|mark_safe)\s*\('  # Flask/Django unsafe render
-    r'|\.format\s*\(.*?\)\s*.*?(html|template)'        # "html {}".format(var)
-    r'|f["\'].*?<[a-z]+.*?{',                          # f"<p>{variavel}"
+    r'(render_template_string|Markup|mark_safe)\s*\('           # Flask/Django unsafe render
+    r'|\.format\s*\(.*?\)\s*.*?(html|template)'                 # "html {}".format(var)
+    r'|f["\'].*?<[a-z]+.*?{'                                    # f"<p>{variavel}"
+    r'|return\s+["\']<[^"\']+["\']\s*\+',  # return "<html...>" + var
     re.IGNORECASE,
 )
 
 # Segredos expostos: atribuições com palavras-chave sensíveis e valor literal
 _REGEX_SEGREDO = re.compile(
     r'(?:password|passwd|secret|api_key|apikey|token|access_key|private_key'
-    r'|auth_token|client_secret)\s*=\s*["\'][^"\']{4,}["\']',
+    r'|auth_token|client_secret|pass)\w*\s*=\s*["\'][^"\']{4,}["\']',
     re.IGNORECASE,
 )
 
@@ -93,6 +94,8 @@ Para cada trecho, responda APENAS com um JSON válido (sem markdown) no formato:
   "cve": "CVE-XXXX-XXXX ou null",
   "descricao": "explicação objetiva em uma frase"
 }
+Se o trecho contiver uma senha, chave, token ou segredo literal atribuído diretamente a uma variável, SEMPRE confirme como verdadeiro positivo.
+Se o trecho concatenar uma variável diretamente em HTML sem escape (XSS), SEMPRE confirme como verdadeiro positivo.
 Se o trecho NÃO for vulnerável (falso positivo), responda com confirmado: false."""
 
 
@@ -121,13 +124,16 @@ def _confirmar_com_llm(candidato: dict) -> dict | None:
     if not dados.get("confirmado", False):
         return None
 
+    cve_raw = dados.get("cve")
+    cve = cve_raw if isinstance(cve_raw, str) and cve_raw.upper().startswith("CVE-") else None
+
     return {
         "tipo": candidato["tipo"],
         "arquivo": candidato["arquivo"],
         "linha": candidato["linha"],
         "trecho": candidato["trecho"],
         "cwe": candidato["cwe"],
-        "cve": dados.get("cve"),
+        "cve": cve,
         "descricao": dados.get("descricao", ""),
     }
 
