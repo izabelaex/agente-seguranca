@@ -1,0 +1,440 @@
+{
+  "projeto_id": "bandit-sqli-multiline",
+  "arquivos": [
+    "exemplos_codigo/dataset_bandit/sql_multiline_statements.py"
+  ],
+  "tempo_segundos": 164.4064235687256,
+  "achados_validados": [
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 30
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Concatenação de SQL em string utilizando triplas aspas, permitindo injeção de código SQL",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "Avaliação automática indisponível (LLM inacessível). Revisão manual recomendada."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 35
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Injeção de SQL utilizando múltiplas linhas de comandos, possivelmente permitindo a execução de comandos arbitrários.",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "Avaliação automática indisponível (LLM inacessível). Revisão manual recomendada."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 37
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Vulnerabilidade SQLI: múltiplas linhas de comando no SQL permitiriam a execução de comandos mal-intencionados",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A exposição à internet junto com a falta de validações torna esta vulnerabilidade muito grave, permitindo exploração remota trivial e possíveis consequências negativas para o sistema e seus usuários."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 41
+      },
+      "referencia_cwe_cve": "CWE-89 / CVE-2016-5614",
+      "descricao": "Injectão de código SQL via caractere '*' no comando SQL que não limita a seleção",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "Devido ao fato do código ser exposto à internet sem validações, um atacante pode explorar essa vulnerabilidade com facilidade, levando a acessos não autorizados e possíveis danos."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 44
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "SQLI por causa de múltiplas instruções SQL em um único bloco com parênteses. Devido à falha de encerramento das aspas duplas, há uma separação implícita entre os diferentes blocos de código SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "SQLI é crítica, pois permite exploração remota trivial sem mitigação"
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 75
+      },
+      "referencia_cwe_cve": "CWE-89 / CVE-2017-5176",
+      "descricao": "O uso de f-string concatenando a query SQL permite injeção de SQL, pois não escape as entradas",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet e não tem validações para SQLI, tornando o risco crítico"
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 81
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "O uso de f-strings permitindo a injeção SQL não é segura e permite que atacantes executem comandos SQL maliciosos.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A injeção SQL pode ser executada remotamente em um sistema exposto à internet, com grande impacto devido à ausência de validações, configurando uma situação crítica."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 85
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Concatenação de variáveis em instruções SQL pode permitir injeção de SQL.",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "A vulnerabilidade SQLI está presente, pois a concatenação de variáveis em instruções SQL pode permitir injeção de comandos. O fato de o sistema estar exposto à internet e não ter validações existentes torna essa vulnerabilidade mais crítica."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 90
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Construção de SQL insegura utilizando comentários em SQL para multiplos comandos, que pode facilitar ataques a bases de dados.",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "O arquivo está exposto à internet sem validações, tornando a vulnerabilidade exploração viável."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 95
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "O uso de SQL multi-linhas pode ser perigoso quando a aplicação não válida os dados de entrada, facilitando a injeção de SQL. Embora o contexto seja um dataset de teste, é crucial abordar essa vulnerabilidade para evitar futuros problemas."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 98
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "O código expõe diretamente SQL em uma string, sem validação alguma, o que poderia permitir injetar comandos SQL, e considerando a exposição à internet e falta de validações, essa é uma vulnerabilidade séria."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 102
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "Vulnerabilidade SQLI detectada em linha de código com potencial impacto, sem validações existentes no contexto da aplicação exposta à internet."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 105
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "baixa",
+      "justificativa": "O trecho suspeito está no código de um dataset de teste (bandit), indicando que não se trata de uma vulnerabilidade real. Além disso, o fato do código estar exposto à internet é irrelevante neste contexto."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 107
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "Existem requisitos para exploração, como a aplicação estar exposta à internet, mas falta de validações torna o impacto moderado"
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 109
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "SQLI pode ser explorada se há injetão de dados, contudo, sistema está exposto à internet sem validações"
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 156
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "A aplicação está exposta à internet e não possui validações, o que torna um ataque a vulnerabilidade SQLI viável. O fato de ser um dataset de teste (bandit) pode indicar intenção de simulação de ataques ou análise de segurança."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "linha": 159
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "media",
+      "justificativa": "O padrão suspeito detectado pode indicar uma SQLI potencial, pois o código está exposto à internet sem validações. Contudo, considerando que este é um dataset de teste (bandit), a exploração dessa vulnerabilidade não teria impacto significativo."
+    }
+  ],
+  "relatorio": {
+    "projeto_id": "bandit-sqli-multiline",
+    "total_vulnerabilidades": 17,
+    "vulnerabilidades": [
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 37
+        },
+        "trecho_codigo": "Linha 37 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade SQLI detectada na linha 37 do arquivo sql_multiline_statements.py permite múltiplas linhas de comando em comandos SQL, o que pode ser explorado por atacantes para executar ações mal-intencionadas.",
+        "sugestao_correcao": "Use uma biblioteca segura como 'sqlite3' para conectar ao banco de dados e utilize parâmetros de substituição de consultas (e.g., ':parameter') em vez de concatenar strings SQL com valores de entrada. Por exemplo:\n\nimport sqlite3\nconn = sqlite3.connect('banco.db')\ncur = conn.cursor()\ncur.execute(\"SELECT * FROM usuarios WHERE nome = :nome\", {'nome': ' Joao'})",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 41
+        },
+        "trecho_codigo": "Linha 41 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "O código está vulnerável à injecção de código SQL (SQLI) pois permite que caracteres específicos sejam inseridos em comandos SQL sem validação, permitindo que um atacante execute comandos mal-intencionados no banco de dados.",
+        "sugestao_correcao": "Use a biblioteca `sqlite3` com o parâmetro `?` para criar consultas de SQL imunes a SQLI. Por exemplo: `cursor.execute('SELECT * FROM usuarios WHERE email = ?', (email,))`. Isso impedirá que caracteres maliciosos sejam executados como código SQL.",
+        "referencia_cwe_cve": "CWE-89 / CVE-2016-5614"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 3,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 44
+        },
+        "trecho_codigo": "Linha 44 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade SQL Injection (SAST) ocorreu em 'exemplos_codigo/dataset_bandit/sql_multiline_statements.py' na linha 44 devido à inclusão de múltiplas instruções SQL em um bloco com parênteses, sem encerramento adequado das aspas duplas.",
+        "sugestao_correcao": "Execute a instrução SQL usando o módulo 'executemany' em vez de executar individualmente e utilize 'paramstyle = \\",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 4,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 75
+        },
+        "trecho_codigo": "Linha 75 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade é causada por uma injeção de SQL que permite ataques mal-intencionados a entrar no banco de dados do sistema.",
+        "sugestao_correcao": "Utilize o módulo \"sqlite3\" para realizar consultas SQL, o qual já protege contra SQLI. Por exemplo, em vez de utilizar `f-string` com a query SQL como argumento, você pode criar um objeto ``db`` do tipo ``Cursor``, que permite realizar operações de banco de dados seguras e eficientes: \n```python\nimport sqlite3\ndb = sqlite3.connect('database.db')\ncur = db.cursor()\ncur.execute(\"SELECT * FROM users WHERE name = ? AND age = ?",
+        "referencia_cwe_cve": "CWE-89 / CVE-2017-5176"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 5,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 81
+        },
+        "trecho_codigo": "Linha 81 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "O uso de f-strings na query SQL permite que os atacantes executem comandos maliciosos, colocando em risco a segurança do sistema.",
+        "sugestao_correcao": "Use a biblioteca sql de forma segura, passando parâmetros como argumento e utilizando placeholders '%s' para evitar a injeção SQL: `cur.execute('SELECT * FROM users WHERE name = %s AND email = %s', (name, email))`",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 6,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 30
+        },
+        "trecho_codigo": "Linha 30 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "Concatenação de SQL em string utilizando triplas aspas, permitindo injeção de código SQL",
+        "sugestao_correcao": "Corrija o padrão identificado. Referência: CWE-89",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 7,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 35
+        },
+        "trecho_codigo": "Linha 35 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade SQLI pode permitir que um atacante execute comandos arbitrários no banco de dados, comprometendo a segurança da aplicação.",
+        "sugestao_correcao": "Utilize parâmetros nomeados e consultas preparadas para evitar a injeção de SQL; por exemplo:\n\nquery = \"SELECT * FROM users WHERE name = %s\"%\n       params['nome']\nconn.execute(query, params)",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 8,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 90
+        },
+        "trecho_codigo": "Linha 90 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A aplicação está vulnerável a ataques SQL Injection (Sqli) devido à construção de SQL insegura utilizando comentários em SQL, permitindo que um atacante execute comandos mal-intencionados na base de dados.",
+        "sugestao_correcao": "Use uma biblioteca de consultas seguras, como `sqlalchemy` para proteger contra SQL Injection.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 9,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 98
+        },
+        "trecho_codigo": "Linha 98 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "O código está exposto a injeção de SQL (SQL Injection) pois utiliza strings em um comando SQL sem validação adequada.",
+        "sugestao_correcao": "Para evitar o SQLI, substitua o uso de string diretamente no comando SQL pelo uso de consultas parametrizadas, garantindo que os parâmetros sejam tratados como tal, e não como código SQL.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 10,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 156
+        },
+        "trecho_codigo": "Linha 156 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "Uma vulnerabilidade SQL Injection foi detectada no código, pois não há validações adequadas para evitar a injecção de comandos SQL mal-intencionados.",
+        "sugestao_correcao": "Use uma biblioteca de consultas SQL seguras como \"psycopg2\" e execute queries parametrizadas para evitar a injeção de SQL.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 11,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 85
+        },
+        "trecho_codigo": "Linha 85 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade SQLI permite que um atacante insira comandos SQL maliciosos, comprometendo a integridade do sistema.",
+        "sugestao_correcao": "Use consultas preparadas (PreparedStatement) para evitar a concatenação de variáveis em instruções SQL e garantir a segurança dos dados.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 12,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 95
+        },
+        "trecho_codigo": "Linha 95 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "O código pode estar vulnerável a injeções SQL porque está executando uma query com parâmetros inseridos diretamente, permitindo que atacantes injectem comandos SQL.",
+        "sugestao_correcao": "Utilize parametrização de consultas para proteger contra injeção SQL, como no exemplo: cur.execute(\"SELECT * FROM users WHERE name = %s\", (nome_usuario,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 13,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 102
+        },
+        "trecho_codigo": "Linha 102 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "Padrão suspeito detectado por regex (LLM indisponível).",
+        "sugestao_correcao": "Corrija o padrão identificado. Referência: CWE-89",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 14,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 107
+        },
+        "trecho_codigo": "Linha 107 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "Um padrão suspeito foi detectado na linha 107 do arquivo sql_multiline_statements.py, que pode indicar uma vulnerabilidade SQL Injection (SAST) com a CWE-89.",
+        "sugestao_correcao": "Utilize placeholders de interpolação (`%s` ou `str.format()`) ou bibliotecas como `sqlalchemy`, em vez de concatenar strings com variáveis para evitar injeções SQL. Por exemplo, em vez disso: `cursor.execute(",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 15,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 109
+        },
+        "trecho_codigo": "Linha 109 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "Um ataque de SQL Injection (Sqli) pode ocorrer se uma string SQL mal-formada for executada, permitindo que um atacante execute queries arbitrárias no banco de dados.",
+        "sugestao_correcao": "Usar a biblioteca \"psycopg2\" com \"cursor.execute()\" e \"cursor.executemany()\", sempre usando placeholders para parâmetros. Por exemplo: \n\ncursor.execute(\"SELECT * FROM tabela WHERE column = %s\", (valor,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "media",
+        "prioridade": 16,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 159
+        },
+        "trecho_codigo": "Linha 159 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "A vulnerabilidade SQLI foi detectada emvido ao uso de um padrão suspeito que pode permitir ataques não autorizados na base de dados.",
+        "sugestao_correcao": "Para corrigir essa vulnerabilidade, utilize a biblioteca \"sqlalchemy\" e seu método \"parametrize\" para segurar as variáveis. Por exemplo:\n\nfrom sqlalchemy import create_engine, text\nengine = create_engine('sqlite:///example.db')\\nsql = \\\"SELECT * FROM users WHERE name = :name\\\"\\nresult = engine.execute(text(sql), {'name': 'John'})",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "baixa",
+        "prioridade": 17,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+          "linha": 105
+        },
+        "trecho_codigo": "Linha 105 em exemplos_codigo/dataset_bandit/sql_multiline_statements.py",
+        "explicacao": "O código pode estar vulnerável a injeção de SQL, embora seja provável que se trate de um dataset de teste",
+        "sugestao_correcao": "Verifique a funcionalidade da aplicação e, caso seja um exemplo de teste, considere excluir o trecho suspeito para evitar confusão com vulnerabilidades reais.",
+        "referencia_cwe_cve": "CWE-89"
+      }
+    ]
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "projeto_id": "bandit-sqli",
+  "arquivos": [
+    "exemplos_codigo/dataset_bandit/sql_statements.py"
+  ],
+  "tempo_segundos": 151.9409511089325,
+  "achados_validados": [
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 17
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Consulta SQL com string interpolada contendo variável, permitindo injeção de SQL",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "Avaliação automática indisponível (LLM inacessível). Revisão manual recomendada."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 18
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query é interpolada com a variável, o que pode permitir injeção de SQL.",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "Avaliação automática indisponível (LLM inacessível). Revisão manual recomendada."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 19
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query contém um marcador de formatação (%s) que é interpolado com a variável value, indicando SQL Injection",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query contém um marcador de formatação (%s) que é interpolado com a variável value, indicando SQL Injection. A aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 20
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Consulta SQL com variável interpolada na string da query, representando uma vulnerabilidade de Injeção de SQL (SQLI)",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A consulta SQL usa variável interpolada na string da query, o que representa uma vulnerabilidade de Injeção de SQL (SQLI) crítica, pois a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 21
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query contém um marcador de formatação (%s) que não está separado dos valores, permitindo a injeção SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query contém um marcador de formatação (%s) que não está separado dos valores, permitindo a injeção SQL. A aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 23
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Consulta SQL com string interpolada contendo variável, permitindo injeção de código SQL",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A consulta SQL usa string interpolada, permitindo injeção de código SQL. A aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 24
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query é interpolada com a variável identifier, o que pode permitir ataques de injeção SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query SQL é interpolada com a variável identifier, o que permite ataques de injeção SQL. A aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 25
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query SQL é interpolada com a variável 'identifier', o que pode permitir ataques de injeção de SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query SQL é interpolada com a variável 'identifier', o que permite ataques de injeção de SQL, e a aplicação está exposta à internet."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 29
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A variável a+b é concatenada diretamente na string SQL, permitindo injeção de código SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A variável a+b é concatenada diretamente na string SQL, permitindo injeção de código SQL. A aplicação está exposta à internet e não há validações existentes, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 30
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query é interpolada com a variável table_name, o que pode permitir ataques de SQL Injection.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query é interpolada com a variável table_name, o que permite ataques de SQL Injection. A aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 31
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "A string da query é interpolada com a variável table_name, o que pode permitir a injeção de SQL.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string da query é interpolada com a variável table_name, o que permite a injeção de SQL. A aplicação está exposta à internet e não há validações existentes, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 36
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "A consulta SQL usa execute(query, valores) com os valores como argumento SEPARADO da string da query (não interpolados nela via %, .format(), f-string ou +), mas a string da query contém um marcador de formatação '%s' que pode ser interpretado como uma tentativa de injeção SQL. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 37
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "A consulta SQL usa execute(query, valores) com os valores como argumento SEPARADO da string da query (não interpolados nela via %, .format(), f-string ou +), mas a string da query contém um marcador de formatação '%s' que pode ser interpretado como uma tentativa de injeção SQL. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 38
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "A consulta SQL usa uma string interpolada com o valor do identificador, o que pode ser um indicativo de SQL Injection. Além disso, a aplicação está exposta à internet, tornando a exploração remota viável."
+    },
+    {
+      "tipo": "SQLI (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+        "linha": 39
+      },
+      "referencia_cwe_cve": "CWE-89",
+      "descricao": "Padrão suspeito detectado por regex (LLM indisponível).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "A consulta SQL usa uma string interpolada com o valor do argumento, o que pode ser um indicativo de SQL Injection. Além disso, a aplicação está exposta à internet, tornando a exploração remota viável."
+    }
+  ],
+  "relatorio": {
+    "projeto_id": "bandit-sqli",
+    "total_vulnerabilidades": 15,
+    "vulnerabilidades": [
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 19
+        },
+        "trecho_codigo": "Linha 19 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI (SAST) ocorre porque uma string da query contém um marcador de formatação (%s) que é interpolado com a variável value, permitindo que atacantes injetem código SQL.",
+        "sugestao_correcao": "Use o método executar() do cursor para executar queries dinâmicas, passando os parâmetros como argumentos separados. Por exemplo: cursor.execute('SELECT * FROM tabela WHERE campo = %s', (value,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 20
+        },
+        "trecho_codigo": "Linha 20 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade de Injeção de SQL (SQLI) ocorre quando uma variável interpolada na string da query SQL permite que um atacante execute comandos arbitrários no banco de dados, comprometendo a segurança do sistema.",
+        "sugestao_correcao": "Use o método parameterized queries ou consultas preparadas para evitar a injeção de SQL. Por exemplo, em Python com o módulo sqlite3, use o cursor executando uma query com parâmetros separados: `cursor.execute('SELECT * FROM usuarios WHERE nome = ?', (nome_usuario,))`",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 3,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 21
+        },
+        "trecho_codigo": "Linha 21 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI (SAST) ocorre porque a string da query contém um marcador de formatação (%s) que não está separado dos valores, permitindo a injeção SQL.",
+        "sugestao_correcao": "Use o método executar() com parâmetros nomeados para evitar a injeção SQL. Por exemplo: cursor.execute('SELECT * FROM tabela WHERE campo = %s', (valor,)) em vez de cursor.execute('SELECT * FROM tabela WHERE campo = ' + str(valor)).",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 4,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 23
+        },
+        "trecho_codigo": "Linha 23 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI (SAST) ocorre porque uma consulta SQL contém uma string interpolada com variáveis, permitindo que um atacante injeione código SQL.",
+        "sugestao_correcao": "Use o método .execute() da classe Connection do psycopg2 para executar a consulta SQL de forma segura, evitando a string interpolada. Por exemplo: cursor.execute(\"SELECT * FROM tabela WHERE campo = %s\", (valor,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 5,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 24
+        },
+        "trecho_codigo": "Linha 24 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A variável 'identifier' é interpolada diretamente na string da query SQL, permitindo ataques de injeção SQL.",
+        "sugestao_correcao": "Use o método 'cursor.execute()' com parâmetros nomeados para evitar a injeção SQL. Por exemplo: cursor.execute('SELECT * FROM tabela WHERE id = %s', (identifier,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 6,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 25
+        },
+        "trecho_codigo": "Linha 25 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI ocorre porque a string da query SQL é interpolada com a variável 'identifier', permitindo ataques de injeção de SQL.",
+        "sugestao_correcao": "Use o método parameterized queries ou consultas preparadas para evitar a injeção de SQL. Por exemplo, em Python com o módulo sqlite3: `cursor.execute('SELECT * FROM tabela WHERE id = ?', (identifier,))`",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 7,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 29
+        },
+        "trecho_codigo": "Linha 29 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A variável 'a+b' é concatenada diretamente na string SQL, permitindo que um atacante insira código mal-intencionado, comprometendo a segurança da aplicação.",
+        "sugestao_correcao": "Use o método 'execute()' com parâmetros nomeados para evitar a injeção de SQL. Por exemplo: cursor.execute('SELECT * FROM tabela WHERE id = %s', (a+b,))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 8,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 30
+        },
+        "trecho_codigo": "Linha 30 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI ocorre porque a string da query é interpolada com a variável table_name, permitindo ataques de injecção de SQL.",
+        "sugestao_correcao": "Use o método executemany() do cursor para evitar a interpolação de strings e proteger contra SQL Injection. Por exemplo: cursor.executemany('SELECT * FROM {} WHERE id = %s'.format(table_name), [(id, )])",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "critica",
+        "prioridade": 9,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 31
+        },
+        "trecho_codigo": "Linha 31 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A variável table_name é interpolada na string da query SQL, permitindo a injeção de comandos SQL mal-intencionados.",
+        "sugestao_correcao": "Use uma biblioteca de consultas SQL seguras como o psycopg2 ou o sqlite3, que suportam parâmetros nomeados e evitam a injeção SQL. Por exemplo, em vez de `cur.execute('SELECT * FROM %s WHERE id = %s', (table_name, id))`, use `cur.execute('SELECT * FROM {} WHERE id = %s'.format(table_name), (id,))` ou `cur.execute('SELECT * FROM :table_name WHERE id = %s', {'table_name': table_name, 'id': id})`. Isso garante que os dados sejam passados de forma segura e evita a injeção SQL.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 10,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 17
+        },
+        "trecho_codigo": "Linha 17 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQL Injection ocorre quando uma consulta SQL contém uma string interpolada com variáveis, permitindo que um atacante insira código SQL mal-intencionado.",
+        "sugestao_correcao": "Use o método executemany() do cursor para evitar a injeção de SQL. Por exemplo: cursor.executemany('INSERT INTO tabela (coluna) VALUES (%s)', [(valor1, valor2)])",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 11,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 18
+        },
+        "trecho_codigo": "Linha 18 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade SQLI ocorre quando uma string da query é interpolada com uma variável, permitindo injeção de SQL.",
+        "sugestao_correcao": "Use o método .format() ou f-strings para evitar a interpolação direta da variável na query. Por exemplo: cursor.execute(\"SELECT * FROM tabela WHERE id = %s\", (id,)) em vez de cursor.execute(\"SELECT * FROM tabela WHERE id = \" + str(id))",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 12,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 36
+        },
+        "trecho_codigo": "Linha 36 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade detectada é uma Injeção SQL (SQLI), que ocorre quando os valores são separados da string da query, permitindo que um atacante insira código SQL mal-intencionado.",
+        "sugestao_correcao": "Use o método executemany() com parâmetros nomeados para evitar a injeção SQL. Por exemplo: cursor.executemany(query, {'parametro1': valor1, 'parametro2': valor2})",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 13,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 37
+        },
+        "trecho_codigo": "Linha 37 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade detectada é uma Injeção SQL (SQLI), que ocorre quando os valores são separados da string da query, mas a string contém um marcador de formatação '%s' que pode ser interpretado como uma tentativa de injeção SQL.",
+        "sugestao_correcao": "Use o método executemany() com parâmetros nomeados para evitar a interpretação dos valores como SQL. Por exemplo, em vez de execute(query, valores), use executemany(query, {'parametro': valor}).",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 14,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 38
+        },
+        "trecho_codigo": "Linha 38 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade detectada é uma possível Injeção de SQL (SQLI), que ocorre quando um valor não confiável é interpolado em uma consulta SQL, permitindo que um atacante execute comandos mal-intencionados.",
+        "sugestao_correcao": "Use consultas preparadas ou executadas diretamente para evitar a injeção de SQL. Por exemplo, em vez de `cursor.execute('SELECT * FROM users WHERE id = %s', (id_user))`, use `cursor.execute('SELECT * FROM users WHERE id = %s', (id_user,))` e passe os parâmetros como uma tupla.",
+        "referencia_cwe_cve": "CWE-89"
+      },
+      {
+        "tipo": "SQLI (SAST)",
+        "severidade": "alta",
+        "prioridade": 15,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/sql_statements.py",
+          "linha": 39
+        },
+        "trecho_codigo": "Linha 39 em exemplos_codigo/dataset_bandit/sql_statements.py",
+        "explicacao": "A vulnerabilidade detectada é uma possível Injeção de SQL (SQLI), que ocorre quando um valor não confiável é interpolado em uma consulta SQL, permitindo que um atacante execute comandos mal-intencionados.",
+        "sugestao_correcao": "Use consultas preparadas ou executadas com parâmetros nomeados para evitar a injeção de SQL. Por exemplo, em vez de `cursor.execute('SELECT * FROM usuarios WHERE email = %s', (email,))`, use `cursor.execute('SELECT * FROM usuarios WHERE email = %s', {'email': email})`.",
+        "referencia_cwe_cve": "CWE-89"
+      }
+    ]
+  }
+}

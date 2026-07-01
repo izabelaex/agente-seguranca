@@ -28,15 +28,24 @@ from contratos.schemas import (
     ContextoProjeto,
 )
 from orquestrador.llm_client import llm
+from agentes.regras_seguranca import REGRA_SQL_PARAMETRIZADO, REGRA_MARK_SAFE_MARKUP
 
 
 #Prompt do sistema
 
-_PROMPT_SISTEMA = """Você é um especialista em segurança de aplicações (AppSec).
+_PROMPT_SISTEMA = f"""Você é um especialista em segurança de aplicações (AppSec).
 Receberá um achado de vulnerabilidade e o contexto real do sistema analisado.
 Sua tarefa é:
   1. Decidir se o achado é real neste contexto (confirmado) ou um falso positivo contextual (descartado).
   2. Atribuir uma severidade efetiva considerando o contexto.
+
+Antes de decidir, reavalie o trecho de código tecnicamente:
+  - {REGRA_SQL_PARAMETRIZADO} Se for parametrizada corretamente: descarte. Caso contrário: mantenha confirmado.
+  - {REGRA_MARK_SAFE_MARKUP} Se houver XSS real: mantenha confirmado. Caso contrário: descarte.
+
+O status deve ser CONSISTENTE com a justificativa: se a justificativa conclui que não há
+vulnerabilidade real, o status DEVE ser "descartado" (nunca "confirmado" com uma justificativa
+que diz o contrário).
 
 Critérios de severidade (baseados em CVSS):
   - critica : exploração remota trivial, dado sensível exposto, sem mitigação
@@ -45,12 +54,21 @@ Critérios de severidade (baseados em CVSS):
   - baixa   : difícil de explorar ou impacto mínimo
   - informativo: boa prática, sem risco imediato
 
+A exposição à internet (campo "Exposto à internet" no contexto) é o principal fator que
+diferencia "crítica" de "alta": "crítica" pressupõe que um atacante remoto, sem acesso prévio
+à rede interna, consegue explorar a falha diretamente pela internet. Se o contexto disser que
+a aplicação NÃO está exposta à internet, um atacante precisaria antes de acesso à rede interna
+— rebaixe a severidade em pelo menos um nível em relação ao que seria se a mesma falha estivesse
+exposta (ex.: o que seria "critica" se exposta vira no máximo "alta" se não exposta), a menos
+que outro fator justifique manter o nível mais alto mesmo assim (explique esse fator na
+justificativa).
+
 Responda APENAS com um JSON válido (sem markdown):
-{{
+{{{{
   "status": "confirmado" | "descartado",
   "severidade": "critica" | "alta" | "media" | "baixa" | "informativo",
   "justificativa": "explicação objetiva em 1-2 frases considerando o contexto"
-}}"""
+}}}}"""
 
 _chain_severidade = (
     ChatPromptTemplate.from_messages([
@@ -95,6 +113,32 @@ def _formatar_achado_sast(achado: AchadoSAST) -> str:
     )
 
 
+#Ajuste determinístico de severidade (fora do LLM)
+
+def _aplicar_teto_severidade(severidade: str, contexto: ContextoProjeto, justificativa: str) -> tuple[str, str]:
+    """
+    Aplica um teto determinístico à severidade retornada pelo LLM: sem exposição à
+    internet, a falha não pode ser "critica" (que pressupõe exploração remota trivial,
+    conforme os próprios critérios do prompt).
+
+    Isso existe porque, na prática, o LLM não aplica essa distinção de forma confiável
+    sozinho (testado repetidamente: mesmo achado, mesmo contexto "não exposto", manteve
+    "critica" em 4 de 5 execuções) — pedir isso só por texto no prompt não é suficiente
+    para garantir consistência, então a regra é forçada em código.
+
+    Returns:
+        Tupla (severidade_ajustada, justificativa_ajustada).
+    """
+    if not contexto["exposto_internet"] and severidade == "critica":
+        nota = (
+            " [Severidade ajustada de 'critica' para 'alta' pelo sistema: a aplicação "
+            "não está exposta à internet, então a exploração remota trivial que "
+            "justificaria 'critica' não se aplica.]"
+        )
+        return "alta", justificativa + nota
+    return severidade, justificativa
+
+
 #Avaliação de cada achado via LLM
 
 def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia: str, localizacao: dict) -> AchadoValidado | None:
@@ -122,14 +166,20 @@ def _avaliar_achado(descricao_achado: str, contexto: ContextoProjeto, referencia
 
     tipo_raw = descricao_achado.split("\n")[0].replace("Tipo: ", "").strip()
 
+    severidade, justificativa = _aplicar_teto_severidade(
+        dados.get("severidade", "media"),
+        contexto,
+        dados.get("justificativa", ""),
+    )
+
     return {
         "tipo": tipo_raw,
         "localizacao": localizacao,
         "referencia_cwe_cve": referencia,
         "descricao": descricao_achado.split("\n")[-1].replace("Descrição: ", "").strip(),
         "status": dados.get("status", "confirmado"),
-        "severidade": dados.get("severidade", "media"),
-        "justificativa": dados.get("justificativa", ""),
+        "severidade": severidade,
+        "justificativa": justificativa,
     }
 
 

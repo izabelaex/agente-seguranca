@@ -1,0 +1,215 @@
+{
+  "projeto_id": "bandit-segredo",
+  "arquivos": [
+    "exemplos_codigo/dataset_bandit/hardcoded-passwords.py"
+  ],
+  "tempo_segundos": 78.11884641647339,
+  "achados_validados": [
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 4
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A variável 'password' é atribuída diretamente uma senha literais ('class_password'), expostando segredos em código",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "O código expõe a senha literalmente, sem qualquer tipo de validação ou mitigação. Isso torna facilmente acessível à exploração remota."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 8
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "Senha hardcoded (`Admin`) está sendo exposta diretamente em código.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A senha hardcoded está exposta diretamente em código, permitindo que um atacante a utilize para autenticação sem necessidade de exploração remota ou outras condições, tornando-o uma vulnerabilidade crítica."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 38
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A função `doLogin` recebe diretamente a senha como argumento com valor padrão e pode ser chamada sem fornecer o parâmetro, expor-se-á assim uma chave ou palavra-chave",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A senha hardcoded pode ser facilmente obtida por um atacante, permitindo a exploração de credenciais válidas, e não há validações para proteger contra isso."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 46
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A senha está sendo passada diretamente para a função doLogin sem estar armazenada de forma segura",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A senha está sendo exposta diretamente na chamada da função doLogin, sem qualquer mitigação ou validação, o que pode permitir a exploração remota e acesso não autorizado à aplicação."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 50
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A senha 'blerg' é atribuída diretamente a uma variável, violando práticas de segurança.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A senha está hardcoded no código, tornando fácil para atacantes obter acesso não autorizado à aplicação exposta à internet"
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 58
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A variável EMAIL_PASSWORD armazena literalmente a senha 'secret', o que constitui um exponenciamento de segredo.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A variável EMAIL_PASSWORD armazena literalmente a senha 'secret', o que é um exponenciamento de segredo exposto à internet, sem nenhuma validação para mitigar esse risco."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 66
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "A senha foi hardcoded e atribuída diretamente a uma variável, o que viola as melhores práticas de segurança.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A senha foi hardcoded e atribuída diretamente a uma variável, violando as melhores práticas de segurança, e o sistema está exposto à internet sem validações existentes."
+    },
+    {
+      "tipo": "SEGREDO_EXPOSTO (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "linha": 70
+      },
+      "referencia_cwe_cve": "CWE-798",
+      "descricao": "O código está exposto a segredos em texto bruto, violando os princípios de privacidade e autenticação.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "O código está exposto à internet, contém segredo em texto bruto sem validações existentes, configurando uma ameaça significativa de autenticação não autorizada."
+    }
+  ],
+  "relatorio": {
+    "projeto_id": "bandit-segredo",
+    "total_vulnerabilidades": 8,
+    "vulnerabilidades": [
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 4
+        },
+        "trecho_codigo": "Linha 4 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A variável 'password' está atribuída diretamente uma senha literal, o que expõe um segredo em código.",
+        "sugestao_correcao": "Substitua a atribuição da senha literal por uma variável de ambiente ou use um mecanismo de segurança de senhas como o secrets management do Python.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 8
+        },
+        "trecho_codigo": "Linha 8 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha Admin está hardcoded no código, exposta diretamente ao usuário. Isso significa que um atacante pode acessar facilmente com essa senha.",
+        "sugestao_correcao": "Considere utilizar variáveis de ambiente ou um sistema de autenticação seguro em vez de hardcodearmos as senhas.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 3,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 38
+        },
+        "trecho_codigo": "Linha 38 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha está sendo fornecida como um argumento com valor padrão na função doLogin, tornando-a facilmente acessível por atacantes que possam explorar credenciais válidas.",
+        "sugestao_correcao": "Substitua a senha hardcoded pelo método de autenticação com input do usuário ou utilize uma API de segurança para armazenamento e validação de credenciais, como hashlib.sha256(input_usuario)",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 4,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 46
+        },
+        "trecho_codigo": "Linha 46 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha está sendo exposta diretamente na chamada da função doLogin, permitindo acesso não autorizado à aplicação.",
+        "sugestao_correcao": "Armazene a senha em um arquivo separado com permissão de leitura restrita e chame o arquivo ao invés de passar a senha explicitamente. Por exemplo: armazene a senha em um arquivo chamado \".senha\" e chame-o na função doLogin.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 5,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 50
+        },
+        "trecho_codigo": "Linha 50 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha 'blerg' é diretamente atribuída a uma variável, comprometendo a segurança do sistema ao tornar fácil para atacantes acessarem a aplicação.",
+        "sugestao_correcao": "Substitua a atribuição direta da senha por um mecanismo de autenticação seguro e robusto, como utilizando a biblioteca `getpass` ou armazenando a senha em um arquivo de configuração protegido, que seja lido no código apenas para fins de autenticação.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 6,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 58
+        },
+        "trecho_codigo": "Linha 58 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha está sendo armazenada literalmente em uma variável, tornando-a exposta à internet sem proteção.",
+        "sugestao_correcao": "Use o mecanismo de envio de e-mail do Python (email) com parâmetros criptografados ou armazene a senha utilizando uma biblioteca de segurança para criptografia.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 7,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 66
+        },
+        "trecho_codigo": "Linha 66 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "A senha foi hardcoded e atribuída diretamente a uma variável, tornando-a vulnerável a ser exibida ou acessada indevidamente.",
+        "sugestao_correcao": "Armazene a senha em um arquivo de configuração separado e protegido ou utilize uma biblioteca de autenticação segura.",
+        "referencia_cwe_cve": "CWE-798"
+      },
+      {
+        "tipo": "SEGREDO_EXPOSTO (SAST)",
+        "severidade": "critica",
+        "prioridade": 8,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+          "linha": 70
+        },
+        "trecho_codigo": "Linha 70 em exemplos_codigo/dataset_bandit/hardcoded-passwords.py",
+        "explicacao": "O código está exposto a segredos em texto bruto, violando os princípios de privacidade e autenticação.",
+        "sugestao_correcao": "Use um sistema de armazenamento de credenciais seguro como o Vault ou as variáveis de ambiente no seu código para proteger informações confidenciais.",
+        "referencia_cwe_cve": "CWE-798"
+      }
+    ]
+  }
+}
