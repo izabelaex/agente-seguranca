@@ -82,9 +82,9 @@ def _no_distribuir(estado: EstadoPipeline) -> dict:
 def _no_sca(estado: EstadoPipeline) -> dict:
     """Nó SCA — análise de dependências vulneráveis."""
     entrada: EntradaSistema = {
-        "projeto_id": estado["projeto_id"],
-        "arquivos": estado["arquivos"],
-        "contexto": estado["contexto"],
+        "projeto_id": estado.get("projeto_id", "sem-id"),
+        "arquivos": estado.get("arquivos", []),
+        "contexto": estado.get("contexto", {"exposto_internet": False, "tipo_aplicacao": "não informado", "validacoes_existentes": "nenhuma"}),
     }
     saida = analisar_dependencias(entrada)
     return {"achados_sca": saida["achados_sca"]}
@@ -93,9 +93,9 @@ def _no_sca(estado: EstadoPipeline) -> dict:
 def _no_sast(estado: EstadoPipeline) -> dict:
     """Nó SAST — varredura estática do código."""
     entrada: EntradaSistema = {
-        "projeto_id": estado["projeto_id"],
-        "arquivos": estado["arquivos"],
-        "contexto": estado["contexto"],
+        "projeto_id": estado.get("projeto_id", "sem-id"),
+        "arquivos": estado.get("arquivos", []),
+        "contexto": estado.get("contexto", {"exposto_internet": False, "tipo_aplicacao": "não informado", "validacoes_existentes": "nenhuma"}),
     }
     saida = analisar_codigo(entrada)
     return {"achados_sast": saida["achados_sast"]}
@@ -104,10 +104,10 @@ def _no_sast(estado: EstadoPipeline) -> dict:
 def _no_severidade(estado: EstadoPipeline) -> dict:
     """Nó Severidade — aguarda SCA + SAST e avalia cada achado com contexto."""
     entrada: EntradaAvaliador = {
-        "projeto_id": estado["projeto_id"],
+        "projeto_id": estado.get("projeto_id", "sem-id"),
         "achados_sca": estado.get("achados_sca", []),
         "achados_sast": estado.get("achados_sast", []),
-        "contexto": estado["contexto"],
+        "contexto": estado.get("contexto", {"exposto_internet": False, "tipo_aplicacao": "não informado", "validacoes_existentes": "nenhuma"}),
     }
     saida = avaliar_severidade(entrada)
     return {"achados_validados": saida["achados_validados"]}
@@ -116,7 +116,7 @@ def _no_severidade(estado: EstadoPipeline) -> dict:
 def _no_relatorio(estado: EstadoPipeline) -> dict:
     """Nó Relatório — gera o relatório final priorizado."""
     entrada: SaidaAvaliador = {
-        "projeto_id": estado["projeto_id"],
+        "projeto_id": estado.get("projeto_id", "sem-id"),
         "achados_validados": estado.get("achados_validados", []),
     }
     saida = gerar_relatorio(entrada)
