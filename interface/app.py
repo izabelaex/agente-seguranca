@@ -6,7 +6,8 @@ Executa o pipeline LangGraph e exibe o relatório de vulnerabilidades.
 import sys
 import os
 import io
-import tempfile
+import threading
+import traceback
 
 import streamlit as st
 
@@ -79,22 +80,31 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 
 class _LogCapture(io.StringIO):
-    """Redireciona prints dos agentes para um placeholder Streamlit."""
+    """Coleta prints dos agentes de forma thread-safe e exibe no placeholder."""
 
     def __init__(self, placeholder):
         super().__init__()
         self._placeholder = placeholder
         self._lines = []
+        self._lock = threading.Lock()
 
     def write(self, text):
         if text and text.strip():
-            self._lines.append(text.strip())
-            # Exibe as últimas 30 linhas
-            self._placeholder.code("\n".join(self._lines[-30:]), language=None)
+            with self._lock:
+                self._lines.append(text.strip())
+                snapshot = list(self._lines[-30:])
+            try:
+                self._placeholder.code("\n".join(snapshot), language=None)
+            except Exception:
+                pass  # thread sem contexto Streamlit — ignora, exibe depois
         return len(text)
 
     def flush(self):
         pass
+
+    def get_all(self) -> str:
+        with self._lock:
+            return "\n".join(self._lines)
 
 
 # ---------------------------------------------------------------------------
@@ -148,14 +158,18 @@ if analisar and arquivo is not None:
 
     estado_final = {}
     erro = None
+    erro_traceback = ""
 
     try:
         with st.spinner("Analisando... (pode levar 1–3 minutos)"):
             estado_final = _pipeline.invoke(estado_inicial)
     except Exception as e:
         erro = e
+        erro_traceback = traceback.format_exc()
     finally:
         sys.stdout = old_stdout
+        # Garante que os logs coletados em threads aparecem no placeholder
+        log_placeholder.code(logger.get_all() or "(sem logs)", language=None)
 
     # ---------------------------------------------------------------------------
     # Exibição do relatório
@@ -166,6 +180,8 @@ if analisar and arquivo is not None:
 
         if erro:
             st.error(f"Erro durante a análise: {erro}")
+            with st.expander("Detalhes do erro"):
+                st.code(erro_traceback, language="python")
 
         elif "relatorio" not in estado_final:
             st.warning("O pipeline não gerou um relatório. Verifique os logs.")
