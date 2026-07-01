@@ -1,0 +1,165 @@
+{
+  "projeto_id": "bandit-xss-flask",
+  "arquivos": [
+    "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py"
+  ],
+  "tempo_segundos": 61.23595094680786,
+  "achados_validados": [
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 6
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "O código não está escapando caracteres sensíveis em seu conteúdo, permitindo que um atacante execute código JavaScript",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "O código está vulnerável a injeção de script (XSS) ao não escapar caracteres sensíveis em seu conteúdo, o que é considerado critico especialmente na aplicação estando exposta à internet e não possuir validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 8
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "O uso de format() para manipular conteúdo pode permitir injeção de código HTML (XSS)",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "O uso de format() para manipular conteúdo pode permitir injeção de código HTML (XSS), que, exposto à internet e sem validações, é uma vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 10
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "A função Markup não está escapeando a entrada de usuário, o que poderia permitir ataques de Injeção de Código HTML (XSS).",
+      "status": "confirmado",
+      "severidade": "alta",
+      "justificativa": "O fato de o arquivo estar exposto à internet e não ter validações em place aumenta a severidade. Uma possível exploração poderia ocorrer através da entrada de usuário maliciosa."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 11
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Concatenação de string com variável em HTML sem escape, indicando XSS",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet, não há validações e o código utiliza uma concatenação de string com variável em HTML sem escape, o que pode permitir a injeção de código XSS."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 12
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "O trecho não usa o escape de marcação adequado, permitindo a injeção de código JavaScript.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A exposição à internet de um dataset sem validações existe um risco crítico para a segurança, visto que qualquer script malicioso pode ser injetado através do código JavaScript"
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "linha": 13
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Concatenação de conteúdo diretamente em HTML sem escape, indicando uma vulnerabilidade XSS.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A vulnerabilidade XSS no arquivo 'markupsafe_markup_xss.py' é grave porque o código concatena conteúdo diretamente em HTML sem escape, permitindo ataques de injeção de script cruzada que podem ser explorados remotamente, especialmente considerando que o sistema está exposto à internet e não há validações existentes."
+    }
+  ],
+  "relatorio": {
+    "projeto_id": "bandit-xss-flask",
+    "total_vulnerabilidades": 6,
+    "vulnerabilidades": [
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 6
+        },
+        "trecho_codigo": "Linha 6 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "O código está vulnerável a injeção de script cross-site (XSS), pois não escapa caracteres sensíveis em seu conteúdo, permitindo que um atacante execute código JavaScript.",
+        "sugestao_correcao": "Utilize a função `mark_safe` do Markupsafe para escapar os caracteres sensíveis e evitar a injeção de script. Por exemplo:`{{ markup_type.render('safe_string') }}` pode ser substituído por `mark_safe(markup_type.render('safe_string'))`.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 11
+        },
+        "trecho_codigo": "Linha 11 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "O código está vulnerável ao ataque de Cross-Site Scripting (XSS) porque concatena string com variável em HTML sem escapar os caracteres especiais.",
+        "sugestao_correcao": "Utilize o método `escape` do `markupsafe` para escapar os caracteres especiais no conteúdo da variável antes de concatená-los à string HTML.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 3,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 12
+        },
+        "trecho_codigo": "Linha 12 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "O código não está protegido contra injeção de código JavaScript, permitindo que scripts mal-intencionados sejam executados.",
+        "sugestao_correcao": "Utilize o método `escape()` do `markupsafe` para escapar as marcações em tempo real e evitar a injeção de código: `Markup.escape(user_input)`",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 4,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 13
+        },
+        "trecho_codigo": "Linha 13 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "O código não está escapando caracteres especiais no conteúdo concatenado em HTML, tornando-o vulnerável a ataques XSS.",
+        "sugestao_correcao": "Utilize a biblioteca Markupsafe para escapar os caracteres especiais: from markupsafe import escape; html = escape('conteúdo com < e >')",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "alta",
+        "prioridade": 5,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 8
+        },
+        "trecho_codigo": "Linha 8 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "A aplicação está vulnerável a injeção de código HTML (XSS) porque utiliza o método format() para manipular conteúdo, permitindo que códigos maliciosos sejam executados.",
+        "sugestao_correcao": "Em vez de usar format(), utilize a biblioteca Jinja2 ou Markupsafe com SafeString e mark_safe para evitar a injeção de código HTML.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "alta",
+        "prioridade": 6,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+          "linha": 10
+        },
+        "trecho_codigo": "Linha 10 em exemplos_codigo/dataset_bandit/markupsafe_markup_xss.py",
+        "explicacao": "A função Markup não está escapeando corretamente a entrada de usuário, permitindo que um ataque de Injeção de Código HTML (XSS) possa ocorrer.",
+        "sugestao_correcao": "Use a funcao MarkupSafe que oferece proteções contra XSS: from markupsafe import escape, MarkupSafe; texto = MarkupSafe(escape(texto))",
+        "referencia_cwe_cve": "CWE-79"
+      }
+    ]
+  }
+}

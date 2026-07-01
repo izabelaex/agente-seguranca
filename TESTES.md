@@ -83,6 +83,29 @@ Isso ajuda a validar se o sistema funciona além do exemplo controlado.
 
 ---
 
+## Fase 1.5 — Teste com dataset público (bandit examples)
+
+Além do arquivo controlado e do código próprio, rode o pipeline contra o dataset em
+`exemplos_codigo/dataset_bandit/` (casos retirados do projeto Bandit, com gabarito
+documentado em `exemplos_codigo/dataset_bandit/README.md`).
+
+Esse dataset tem casos "bons" e "ruins" lado a lado para cada tipo de vulnerabilidade do
+MVP, incluindo padrões que a regex atual do Agente 2 provavelmente **não** detecta (XSS via
+`mark_safe`/`Markup`, SQLi em strings multilinha) — isso é esperado e intencional: o
+objetivo dessa fase é justamente mapear esses gaps antes de decidir se o ajuste necessário
+é de prompt ou de regex.
+
+Para cada arquivo do dataset, rode conforme os comandos no README do dataset e anote:
+- [ ] O que foi confirmado vs. descartado por agente (SCA não se aplica aqui — sem
+      `requirements.txt`).
+- [ ] Onde o resultado bateu com o gabarito.
+- [ ] Onde divergiu — e se a causa foi a regex (candidato nem chegou ao LLM) ou o LLM
+      (candidato chegou mas a decisão de confirmar/descartar/severidade não fez sentido).
+
+Essa distinção (regex vs. prompt) é o que vai alimentar a Fase 2.
+
+---
+
 ## Fase 2 — Reportar e ajustar
 
 ### Como reportar problemas

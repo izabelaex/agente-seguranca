@@ -48,6 +48,11 @@ Receberá um achado de vulnerabilidade confirmado e deve gerar:
   1. Uma explicação clara do problema (máximo 2 frases, sem jargão desnecessário).
   2. Uma sugestão concreta de correção em Python (trecho de código ou instrução direta).
 
+Regras importantes para a sugestão de correção:
+- NUNCA recomende desativar o auto-escape do template engine (ex.: `{{% autoescape off %}}`, `autoescape=False`) como forma de corrigir XSS — isso piora a vulnerabilidade, não corrige.
+- Se a vulnerabilidade for por mark_safe()/Markup() recebendo uma variável não confiável, a correção real é REMOVER o mark_safe()/Markup() dessa variável (deixando o auto-escape padrão do framework atuar) ou sanitizar o conteúdo antes com uma biblioteca real de sanitização (ex.: bleach.clean()). NUNCA sugira "envolver com mark_safe()/Markup()" ou "continuar usando mark_safe()/Markup()" como correção — essa é exatamente a função que causa a vulnerabilidade, recomendá-la de volta não é uma correção.
+- Só cite funções/métodos que existem de verdade nas bibliotecas mencionadas (ex.: django.utils.html.escape(), markupsafe.escape()). Se não tiver certeza do nome exato de uma função, descreva a correção em texto em vez de inventar um nome de função.
+
 Responda APENAS com JSON válido (sem markdown):
 {{
   "explicacao": "...",

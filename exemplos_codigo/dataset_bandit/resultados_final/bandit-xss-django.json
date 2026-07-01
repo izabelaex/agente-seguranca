@@ -1,0 +1,1041 @@
+{
+  "projeto_id": "bandit-xss-django",
+  "arquivos": [
+    "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+    "exemplos_codigo/dataset_bandit/mark_safe_secure.py"
+  ],
+  "tempo_segundos": 371.9195854663849,
+  "achados_validados": [
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 10
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não escapou a variável my_insecure_str, tornando-a suscetível a ataques de injeção de script. Além disso, a aplicação está exposta à internet, o que facilita a exploração remota da vulnerabilidade."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 22
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável que pode conter código malicioso. Isso permite a injeção de script e XSS. Além disso, o sistema está exposto à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 30
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_insecure_str pode conter código malicioso. Isso permite um ataque de XSS remoto trivial, sem mitigação, pois a aplicação está exposta à internet."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 41
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável insegura (my_insecure_str), o que pode permitir ataques de XSS. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 54
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_insecure_str pode conter código malicioso. Isso permite uma injeção de script cross-site (XSS) remota, considerando que a aplicação está exposta à internet."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 59
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet, não há validações existentes e o trecho de código usa mark_safe() com uma variável insegura, o que pode permitir a injeção de script XSS."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 64
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet, não há validações existentes e o trecho de código usa mark_safe() com uma variável formatada, o que pode permitir a injeção de script XSS."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 69
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A variável my_insecure_str pode conter código malicioso, permitindo a injeção de script XSS. A aplicação está exposta à internet, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 74
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A variável my_insecure_str pode conter código malicioso, permitindo a injeção de script em um template seguro. A aplicação está exposta à internet, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 79
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string não está sendo escapada corretamente, permitindo a injeção de código HTML. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 84
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet e não há validações para o input, tornando a exploração remota trivial. Além disso, a string é marcada como safe, o que permite a injeção de código XSS."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 89
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string '%(b)s' não está parametrizada corretamente, permitindo a injeção de código XSS. Além disso, o fato de a aplicação estar exposta à internet torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 94
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() está sendo usada com uma variável (sre_constants.ANY), o que pode permitir a injeção de código XSS. Além disso, a aplicação está exposta à internet e não há validações existentes para proteger contra ataques."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 99
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável (any_str) que pode conter código malicioso, o que permite a injeção de script e consequente XSS. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 104
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() está sendo usada com uma variável ANY, o que pode permitir a injeção de código XSS. Além disso, a aplicação está exposta à internet e não há validações existentes para proteger contra ataques."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 109
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável (any_str) que pode conter código malicioso, o que permite a injeção de script e consequente XSS. Além disso, a aplicação está exposta à internet, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 114
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável (f.read()) que pode conter código malicioso, o que permite a injeção de script. Além disso, a aplicação está exposta à internet, tornando essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 119
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável (f) que pode conter código malicioso, o que permite a injeção de script e consequente XSS. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 126
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável (my_secure_str) que pode conter código malicioso, permitindo a injeção de script. Além disso, o sistema está exposto à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 133
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável (my_secure_str) que pode conter código malicioso, permitindo a injeção de script. Além disso, o sistema está exposto à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 143
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável (my_secure_str) que pode conter código malicioso, permitindo a injeção de script. Além disso, a aplicação é exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 149
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável que pode conter código malicioso, o que pode levar a um ataque de XSS. Além disso, a aplicação está exposta à internet, o que torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 153
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável (str_arg) que pode conter código malicioso, permitindo a injeção de script. Além disso, a aplicação é exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 159
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois recebe uma variável que pode conter código malicioso. Isso permite a injeção de script XSS, especialmente considerando que o sistema está exposto à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "linha": 167
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "O trecho de código usa mark_safe() com uma string formatada que pode conter variáveis maliciosas, o que permite a injeção de scripts XSS. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 11
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 14
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 17
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável que pode conter código malicioso. Isso permite a injeção de script e é um risco crítico para a segurança da aplicação."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 29
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet, o que torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 35
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string não está sendo escapada corretamente, permitindo a injeção de código HTML. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 36
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois está recebendo uma variável que pode conter código malicioso. Além disso, a aplicação está exposta à internet, o que torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 37
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet, não há validações existentes e o trecho de código usa mark_safe() com uma variável formatada via .format(), o que pode permitir a injeção de script XSS."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 38
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A variável 'my_secure_str' está sendo usada diretamente em uma string HTML sem ser escapada, o que permite a injeção de código XSS. Além disso, a aplicação é exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 39
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet e não há validações existentes, tornando a vulnerabilidade XSS crítica. O uso de mark_safe() sem escapar as variáveis pode permitir a injeção de código malicioso."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 41
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Isso permite uma injeção de script XSS, especialmente considerando que a aplicação é exposta à internet e não há validações existentes."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 47
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string não está sendo escapada corretamente, permitindo a injeção de código HTML. Além disso, a aplicação está exposta à internet, tornando a exploração remota trivial."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 48
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A aplicação está exposta à internet e não há validações, tornando a vulnerabilidade XSS crítica. O uso de mark_safe() indica que o conteúdo da variável pode ser executado como código HTML."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 49
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A string não está sendo escapada corretamente, permitindo a injeção de código HTML. Além disso, o fato de estar exposto à internet torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 62
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet, o que torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 65
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet, o que torna essa vulnerabilidade crítica."
+    },
+    {
+      "tipo": "XSS (SAST)",
+      "localizacao": {
+        "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "linha": 75
+      },
+      "referencia_cwe_cve": "CWE-79",
+      "descricao": "Confirmado por análise sintática determinística (AST) — não depende de julgamento do LLM.",
+      "status": "confirmado",
+      "severidade": "critica",
+      "justificativa": "A função mark_safe() não está sendo usada corretamente, pois a variável my_secure_str pode conter código malicioso. Além disso, a aplicação está exposta à internet e não há validações existentes."
+    }
+  ],
+  "relatorio": {
+    "projeto_id": "bandit-xss-django",
+    "total_vulnerabilidades": 41,
+    "vulnerabilidades": [
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 1,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 10
+        },
+        "trecho_codigo": "Linha 10 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A variável my_insecure_str não foi adequadamente escapada, tornando-a suscetível a ataques de injeção de script (XSS). Isso ocorreu porque a função mark_safe() foi usada sem garantir que o conteúdo da variável seja seguro.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável, deixando o auto-escape padrão do framework atuar. Se necessário, use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro antes de usá-lo no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 2,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 22
+        },
+        "trecho_codigo": "Linha 22 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo injeção de script e XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para proteger contra XSS.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 3,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 30
+        },
+        "trecho_codigo": "Linha 30 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A variável my_insecure_str pode conter código malicioso, permitindo um ataque de XSS remoto.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_insecure_str ou use uma biblioteca de sanitização para proteger contra XSS.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 4,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 41
+        },
+        "trecho_codigo": "Linha 41 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável insegura (my_insecure_str), o que pode permitir ataques de XSS.",
+        "sugestao_correcao": "Remova a chamada à função mark_safe() para essa variável ou use uma biblioteca de sanitização como bleach.clean() para limpar o conteúdo antes de passá-lo para mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 5,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 54
+        },
+        "trecho_codigo": "Linha 54 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A variável my_insecure_str pode conter código malicioso, permitindo uma injeção de script cross-site (XSS) remota.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou sanitarize o conteúdo antes com uma biblioteca real de sanitização.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 6,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 59
+        },
+        "trecho_codigo": "Linha 59 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A vulnerabilidade XSS (Cross-Site Scripting) foi detectada em uma variável não confiável que está sendo renderizada diretamente no template, permitindo a injeção de código malicioso.",
+        "sugestao_correcao": "Remova o mark_safe() da variável insegura e deixe o auto-escape padrão do framework atuar para evitar a injeção de script XSS. Se necessário, use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 7,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 64
+        },
+        "trecho_codigo": "Linha 64 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A vulnerabilidade XSS ocorre porque uma variável não confiável é passada para mark_safe(), permitindo que scripts mal-intencionados sejam executados no navegador do usuário.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro antes de ser renderizado.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 8,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 69
+        },
+        "trecho_codigo": "Linha 69 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A variável my_insecure_str pode conter código malicioso, permitindo a injeção de script XSS, pois não está sendo adequadamente sanitizada antes de ser renderizada em um template.",
+        "sugestao_correcao": "Use o método escape() da biblioteca django.utils.html para escapar os caracteres especiais na variável my_insecure_str antes de passá-la ao template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 9,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 74
+        },
+        "trecho_codigo": "Linha 74 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A variável my_insecure_str pode conter código malicioso que permite a injeção de script em um template seguro, tornando a aplicação vulnerável à XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_insecure_str ou use uma biblioteca de sanitização para limpar o conteúdo antes de passá-lo ao template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 10,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 79
+        },
+        "trecho_codigo": "Linha 79 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A vulnerabilidade XSS ocorre porque uma string não está sendo escapada corretamente, permitindo a injeção de código HTML.",
+        "sugestao_correcao": "Use o método escape() da biblioteca django.utils.html para escapar a string antes de renderizá-la no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 11,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 84
+        },
+        "trecho_codigo": "Linha 84 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A vulnerabilidade XSS (Cross-Site Scripting) foi detectada em uma aplicação Python. Isso ocorreu porque uma string não confiável foi marcada como segura, permitindo que códigos maliciosos fossem injetados.",
+        "sugestao_correcao": "Remova o mark_safe() da variável não confiável ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 12,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 89
+        },
+        "trecho_codigo": "Linha 89 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A string '%(b)s' não está parametrizada corretamente, permitindo a injeção de código XSS.",
+        "sugestao_correcao": "Use a função django.utils.html.escape() para escapar os caracteres especiais na string antes de renderizá-la no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 13,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 94
+        },
+        "trecho_codigo": "Linha 94 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável não confiável, permitindo a injeção de código XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou sanitarize o conteúdo antes com uma biblioteca real de sanitização.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 14,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 99
+        },
+        "trecho_codigo": "Linha 99 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada incorretamente, permitindo que uma variável não confiável contenha código malicioso, o que pode causar injeção de script e XSS.",
+        "sugestao_correcao": "Remova a chamada à função mark_safe() para essa variável ou use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 15,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 104
+        },
+        "trecho_codigo": "Linha 104 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código mal-intencionado, permitindo a injeção de código XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 16,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 109
+        },
+        "trecho_codigo": "Linha 109 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada incorretamente, permitindo que uma variável não confiável contenha código malicioso, levando a injeção de script e XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável any_str ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 17,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 114
+        },
+        "trecho_codigo": "Linha 114 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada incorretamente, permitindo que código malicioso seja injetado na aplicação.",
+        "sugestao_correcao": "Remova o mark_safe() da variável f.read() ou use uma biblioteca de sanitização para limpar o conteúdo antes de renderizá-lo.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 18,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 119
+        },
+        "trecho_codigo": "Linha 119 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada incorretamente, permitindo que uma variável não confiável contenha código malicioso, levando a injeção de script e XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável f ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 19,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 126
+        },
+        "trecho_codigo": "Linha 126 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável não confiável (my_secure_str), permitindo a injeção de script e tornando o sistema vulnerável a ataques XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 20,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 133
+        },
+        "trecho_codigo": "Linha 133 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável não confiável (my_secure_str), permitindo a injeção de script e tornando o sistema vulnerável a ataques XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou sanitarize o conteúdo antes com uma biblioteca real de sanitização, como bleach.clean().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 21,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 143
+        },
+        "trecho_codigo": "Linha 143 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo a injeção de script em XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para limpar o conteúdo antes de passá-lo à função mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 22,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 149
+        },
+        "trecho_codigo": "Linha 149 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável não confiável, o que pode permitir ataques de XSS. Isso ocorre porque a aplicação está exposta à internet e pode ser acessada por usuários mal-intencionados.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para limpar o conteúdo antes de renderizá-lo. Por exemplo, você pode usar a função django.utils.html.escape() para escapar os caracteres especiais e evitar que o código malicioso seja executado.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 23,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 153
+        },
+        "trecho_codigo": "Linha 153 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo a injeção de script em XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável str_arg ou use uma biblioteca de sanitização para limpar o conteúdo antes de passá-lo à função mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 24,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 159
+        },
+        "trecho_codigo": "Linha 159 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo injeção de script XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para proteger contra XSS.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 25,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+          "linha": 167
+        },
+        "trecho_codigo": "Linha 167 em exemplos_codigo/dataset_bandit/mark_safe_insecure.py",
+        "explicacao": "O código usa mark_safe() com uma string formatada que pode conter variáveis maliciosas, permitindo a injeção de scripts XSS.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou sanitarize o conteúdo antes com uma biblioteca real de sanitização (ex.: bleach.clean()).",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 26,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 11
+        },
+        "trecho_codigo": "Linha 11 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso que é executado no navegador do usuário, causando uma vulnerabilidade XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use a função escape() para sanitizar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 27,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 14
+        },
+        "trecho_codigo": "Linha 14 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso que é executado no navegador do usuário, causando uma vulnerabilidade XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use a função escape() para sanitizar o conteúdo antes de renderizá-lo.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 28,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 17
+        },
+        "trecho_codigo": "Linha 17 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo injeção de script e risco crítico à segurança da aplicação.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para proteger contra XSS.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 29,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 29
+        },
+        "trecho_codigo": "Linha 29 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso, permitindo ataques de Cross-Site Scripting (XSS) quando renderizada em um template.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para garantir que seu conteúdo seja seguro antes de renderizá-lo no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 30,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 35
+        },
+        "trecho_codigo": "Linha 35 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A vulnerabilidade XSS (Cross-Site Scripting) ocorre porque uma string não está sendo escapada corretamente, permitindo que código HTML mal-intencionado seja injetado na página.",
+        "sugestao_correcao": "Use a função `django.utils.html.escape()` para escapar a string antes de renderizá-la no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 31,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 36
+        },
+        "trecho_codigo": "Linha 36 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável que pode conter código malicioso, permitindo ataques de Cross-Site Scripting (XSS).",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 32,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 37
+        },
+        "trecho_codigo": "Linha 37 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A vulnerabilidade XSS ocorre porque uma variável não confiável é passada para mark_safe(), permitindo que scripts maliciosos sejam executados no navegador do usuário.",
+        "sugestao_correcao": "Remova o mark_safe() da variável e deixe o auto-escape padrão do framework atuar, ou use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro antes de passá-lo para mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 33,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 38
+        },
+        "trecho_codigo": "Linha 38 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável 'my_secure_str' está sendo usada diretamente em uma string HTML sem ser escapada, permitindo a injeção de código XSS.",
+        "sugestao_correcao": "Use o método escape() da biblioteca django.utils.html para escapar os caracteres especiais na variável 'my_secure_str', garantindo que ela seja segura para uso em strings HTML.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 34,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 39
+        },
+        "trecho_codigo": "Linha 39 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A aplicação está vulnerável a ataques de Cross-Site Scripting (XSS) porque usa mark_safe() sem escapar as variáveis, permitindo a injeção de código malicioso.",
+        "sugestao_correcao": "Remova o mark_safe() da variável não confiável ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicá-lo.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 35,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 41
+        },
+        "trecho_codigo": "Linha 41 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A função mark_safe() está sendo usada com uma variável não confiável (my_secure_str), permitindo que código malicioso seja injetado, resultando em XSS.",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para limpar o conteúdo antes de aplicar mark_safe().",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 36,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 47
+        },
+        "trecho_codigo": "Linha 47 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A vulnerabilidade XSS ocorre porque uma string não está sendo escapada corretamente, permitindo que código HTML injetado seja executado.",
+        "sugestao_correcao": "Use o método escape() da biblioteca django.utils.html para escapar a string antes de renderizá-la no template.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 37,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 48
+        },
+        "trecho_codigo": "Linha 48 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A aplicação está sujeita a uma vulnerabilidade XSS crítica porque o conteúdo da variável não é validado corretamente antes de ser renderizado como HTML, permitindo que um atacante execute código malicioso.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável e deixe o auto-escape padrão do framework atuar para evitar a execução de código malicioso. Se necessário, use uma biblioteca de sanitização como bleach.clean() para garantir que o conteúdo seja seguro antes de ser renderizado.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 38,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 49
+        },
+        "trecho_codigo": "Linha 49 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A string não está sendo escapada corretamente, permitindo a injeção de código HTML.",
+        "sugestao_correcao": "Utilize a função django.utils.html.escape() para escapar a string antes de exibi-la.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 39,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 62
+        },
+        "trecho_codigo": "Linha 62 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso, permitindo ataques de Cross-Site Scripting (XSS) quando usada com mark_safe().",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para garantir que o conteúdo seja seguro antes de renderizá-lo.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 40,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 65
+        },
+        "trecho_codigo": "Linha 65 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso, permitindo ataques de Cross-Site Scripting (XSS) quando renderizada em uma página da aplicação.",
+        "sugestao_correcao": "Remova o mark_safe() dessa variável ou use uma biblioteca de sanitização para garantir que o conteúdo seja seguro antes de renderizá-lo.",
+        "referencia_cwe_cve": "CWE-79"
+      },
+      {
+        "tipo": "XSS (SAST)",
+        "severidade": "critica",
+        "prioridade": 41,
+        "localizacao": {
+          "arquivo": "exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+          "linha": 75
+        },
+        "trecho_codigo": "Linha 75 em exemplos_codigo/dataset_bandit/mark_safe_secure.py",
+        "explicacao": "A variável my_secure_str pode conter código malicioso que é executado diretamente no navegador do usuário, permitindo ataques de Cross-Site Scripting (XSS).",
+        "sugestao_correcao": "Remova o mark_safe() da variável my_secure_str ou use uma biblioteca de sanitização para garantir que o conteúdo seja seguro antes de ser renderizado no template.",
+        "referencia_cwe_cve": "CWE-79"
+      }
+    ]
+  }
+}

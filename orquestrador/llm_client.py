@@ -119,6 +119,12 @@ class OllamaAuth(BaseChatModel):
 
     model: str = MODELO_PADRAO
     base_url: str = BASE_URL
+    # Baixa de propósito: os agentes usam o LLM para classificação de segurança
+    # (confirmado/descartado, severidade), não para geração criativa de texto. Testes
+    # mostraram a mesma entrada produzindo severidades diferentes entre execuções
+    # (ex.: "critica" vs "alta") com a temperatura padrão do Ollama (~0.8) — baixar para
+    # perto de zero reduz essa variância sem custo de chamadas extras ao LLM.
+    temperature: float = 0.1
 
     @property
     def _llm_type(self) -> str:
@@ -126,7 +132,7 @@ class OllamaAuth(BaseChatModel):
 
     @property
     def _identifying_params(self) -> dict:
-        return {"model": self.model, "base_url": self.base_url}
+        return {"model": self.model, "base_url": self.base_url, "temperature": self.temperature}
 
     def _generate(
         self,
@@ -144,7 +150,12 @@ class OllamaAuth(BaseChatModel):
             )
             msgs.append({"role": role, "content": m.content})
 
-        payload = {"model": self.model, "messages": msgs, "stream": False}
+        payload = {
+            "model": self.model,
+            "messages": msgs,
+            "stream": False,
+            "options": {"temperature": self.temperature},
+        }
 
         try:
             r = requests.post(
