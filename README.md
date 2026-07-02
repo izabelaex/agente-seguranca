@@ -53,4 +53,10 @@ projeto-agente-seguranca/
 
 ## Como rodar
 
-> (preencher conforme implementação avançar)
+- Instalação das dependências:
+```pip install -r requirements.txt```
+
+- Para a interface visual:
+```streamlit run interface/app.py```
+
+- Para o LangGraph:
